@@ -1,0 +1,9 @@
+deeds:
+    deed-sign-interaction-cooldown: 1000
+    deed-sign-confirmation: 30
+random-chests:
+    style: DROP_OFF
+    generate-new-upon-open: true
+    creation-sound: true
+    open-sound: true
+    FIREWORKS: true

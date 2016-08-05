@@ -1,0 +1,12 @@
+plots:
+  listComma: "&3, &r"
+  commands:
+    plot:
+      players:
+        list: "&7Players added to plot: &3[&r$<plot.members>&3]"
+      home:
+        other: "&7Teleported to plot: &3$<plot.name> &7owned by &3$<player.name>&7."
+        own: "&7Teleported to own plot."
+        notMember: "&7You need to be member of this plot."
+      admin:
+        setHome: "&7You set home of &3$plot.name>&7 plot to &3$<location.x> $<location.y> $<location.z>"
