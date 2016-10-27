@@ -72,7 +72,6 @@ public class Plot
      */
     public void reset(final ProtectedRegion region)
     {
-
         this.removeAll(region);
         this.owner = null;
         this.players.clear();
