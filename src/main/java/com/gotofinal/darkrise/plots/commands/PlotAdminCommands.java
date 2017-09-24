@@ -126,7 +126,7 @@ public class PlotAdminCommands
 
         final Plot plot = this.getPlot(mgr, id);
 
-        final Block block = player.getTargetBlock((HashSet<Byte>) null, 6);
+        final Block block = player.getTargetBlock(null, 6);
 
         if ((block == null) || ((block.getType() != Material.WALL_SIGN) && (block.getType() != Material.SIGN_POST)))
         {
