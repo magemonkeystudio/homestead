@@ -1,8 +1,5 @@
 package com.gotofinal.darkrise.plots.commands;
 
-import java.util.HashSet;
-import java.util.concurrent.TimeUnit;
-
 import com.gotofinal.darkrise.plots.DarkRisePlots;
 import com.gotofinal.darkrise.plots.deeds.Deed;
 import com.gotofinal.darkrise.plots.deeds.Plot;
@@ -13,7 +10,6 @@ import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.CommandException;
 import com.sk89q.minecraft.util.commands.CommandPermissions;
 import com.sk89q.worldguard.protection.managers.RegionManager;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.Bukkit;
@@ -26,6 +22,9 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 public class PlotAdminCommands
 {
@@ -126,7 +125,7 @@ public class PlotAdminCommands
 
         final Plot plot = this.getPlot(mgr, id);
 
-        final Block block = player.getTargetBlock(null, 6);
+        final Block block = player.getTargetBlock((Set<Material>) null, 6);
 
         if ((block == null) || ((block.getType() != Material.WALL_SIGN) && (block.getType() != Material.SIGN_POST)))
         {
