@@ -1,0 +1,17 @@
+enabled-worlds:
+- world
+types:
+    cottage:
+        display-name: '&1Cottage'
+        description: '&3A cottage'
+        friends: 10
+        tax: 100.0
+        drop-chance: 10.0
+        maximum-extension-time: 24
+        initial-extension-time: 24
+        extension-time: 24
+        limited-blocks:
+            chest: 10
+            smooth_brick:
+                data: 3
+                amount: 5

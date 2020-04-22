@@ -1,0 +1,14 @@
+name: Plots
+main: com.gotofinal.darkrise.plots.DarkRisePlots
+version: ${project.version}
+depend: [RiseCore, Economy, WorldGuard, Vault]
+authors: [Travja, GotoFinal, Goblom, SupaHam]
+
+commands:
+  #plot:
+  house:
+    usage: /<command>
+    description: Plots commands
+  system:
+    usage: /<command>
+    description: Controls entire plugin

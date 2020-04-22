@@ -1,0 +1,15 @@
+plots:
+  gracePeriod: "&e&lWARNING &r&cYour plot, $<plotname>, has entered a grace period. It will be cleared in $<time>"
+  listComma: "&3, &r"
+  commands:
+    plot:
+      players:
+        list: "&7Players added to plot: &3[&r$<plot.members>&3]"
+      home:
+        other: "&7Teleported to plot: &3$<plot.name> &7owned by &3$<target.name>&7."
+        own: "&7Teleported to own plot."
+        notMember: "&7You need to be member of this plot."
+      admin:
+        setHome: "&7You set home of &3$plot.name>&7 plot to &3$<location.x> $<location.y> $<location.z>"
+      sell:
+        distance: "&cYou must be within $<sellDistance> of $<buyer> to sell your plot."

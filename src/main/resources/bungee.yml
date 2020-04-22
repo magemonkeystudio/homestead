@@ -1,0 +1,7 @@
+name: RisePlots-Bungee
+author: Travja
+version: 1.0-SNAPSHOT
+main: me.travja.darkrise.plots.bungee.Bridge
+commands:
+#  house:
+#  deed:

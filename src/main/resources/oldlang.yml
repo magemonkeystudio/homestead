@@ -1,0 +1,62 @@
+plots:
+  listComma: "&3, &r"
+  doNotOwnPlot: "&cYou do not own a plot on this world."
+  notEnabledWorld: "House deeds is not enabled in '$<player.world.name>'"
+  commands:
+    plot:
+      list:
+        worldNotLoaded: "That world is not loaded."
+      buy:
+        purchasedSender: "&7You purchased $<name>'s plot."
+        purchasedOwner: "&7$<player.name> purchased your plot."
+        noDeal: "&cThat player has not made a deal with you."
+      sell:
+        removeMembers: "&cPlease remove all players to sell your plot."
+        noBuyer: "&cThat player is not online."
+        buyerAlreadyOwnsPlot: "&cThat player already owns a plot."
+        buyerCantAfford: "&cThat player can not afford your deal."
+        buyerMsg: "&9$<player.name> &7is selling their plot for $<money>"
+        start: "&7Started a deal with $<player:buyer.name>."
+        expiredBuyer: "&cDeal with $<player.name> expired."
+        expiredSender: "&cDeal with $<player:buyer.name> expired."
+      add:
+        limit: "&cYou can not add anymore players to your plot."
+        owner: "&cYou can not add the owner to the plot."
+        alreadyAdded: "&cThat player is already added to your plot."
+        added: "&eYou successfully added &b$<name>&e to your plot."
+        addedTarget: "&e$<player.name> added you to his plot."
+      remove:
+        notAdded: "&cThat player is not added to your plot."
+        removed: "&eYou successfully removed $<name> from your plot."
+        removedTarget: "&e$<player.name> removed you from his plot."
+      players:
+        list: "&7Players added to plot: &3[&r$<plot.members>&3]"
+      home:
+        other: "&7Teleported to plot: &3$<plot.name> &7owned by &3$<player.name>&7."
+        own: "&7Teleported to own plot."
+        notMember: "&7You need to be member of this plot."
+      admin:
+        setHome: "&7You set home of &3{name}&7 plot to &3{loc}"
+      help: |2-
+        You typed: &7$<text>&r
+         Valid syntax:
+           &8/&7plot &radd &8<&7player&8> &8- &rThis command adds a player to the command sender's plot.
+           &8/&7plot &rremove &8<&7player&8> &8- &rThis command removes a player from the command sender's plot.
+           &8/&7plot &rplayers &8- &rThis command print list of players added to the command sender's plot.
+           &8/&7plot &rhome &8[&7player&8] &8- &rTeleport the command sender's plot.
+           &8/&7plot &rsell &8<&7player&8> &8<&7price&8> &8- &rThis command sells the command sender's plot to a player.
+           &8/&7plot &rbuy &8<&7player&8> &8- &rThis command purchases a player's plot.
+           &8/&7plot &rlist &8[&7world&8] &8[&r-p &8<&7page&8>] &8- &rLists all the plots.
+           &8/&7plot &radmin &8[&r-w &8<&7world&8>] ... - &rPlot administrator commands.
+           &8/&7plot &radmin create &8<&7id&8> &8<&7deed&8> &8- &rDreates a new plot for deeds
+           &8/&7plot &radmin remove &8<&7id&8> &8- &rRemoves a plot.
+           &8/&7plot &radmin sethome &8<&7id&8> &8- &rSet home location of plot
+           &8/&7plot &radmin sign &8<&7id&8> &8- &rSets the sign location of a plot.
+           &8/&7plot &radmin deed &8<&7id&8> &8<&7deed&8> &8- &rSets the deed type of a plot.
+           &8/&7plot &radmin expiry &8<&7id&8> &8<&7seconds&8> &8- &rSets the expiry time of a plot.
+           &8/&7plot &radmin owner &8<&7id&8> &8<&7player&8> &8- &rSets the owner of a plot.
+           &8/&7plot &radmin addplayer &8<&7id&8> &8<&7player&8> &8- &rAdds a player to a plot.
+           &8/&7plot &radmin removeplayer &8<&7id&8> &8<&7player&8> &8- &rRemoves a player from a plot.
+           &8/&7plot &radmin update &8<&7id&8> &8- &rUpdates a plot's sign.
+           &8/&7plot &rreload
+           &8/&7plot &rsave
