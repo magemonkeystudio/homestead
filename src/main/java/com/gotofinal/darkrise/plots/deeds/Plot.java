@@ -5,11 +5,9 @@ import com.gotofinal.darkrise.plots.config.ConfigHandler;
 import com.gotofinal.darkrise.plots.events.PlotUpdateEvent;
 import com.gotofinal.darkrise.plots.util.StringUtil;
 import com.gotofinal.darkrise.plots.util.TimeUtil;
-import com.sk89q.worldedit.bukkit.BukkitAdapter;
-import com.sk89q.worldguard.WorldGuard;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import com.sun.webkit.dom.HTMLImageElementImpl;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.bukkit.Bukkit;
@@ -141,7 +139,8 @@ public class Plot {
             return null;
         }
 
-        final RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(this.signLocation.getWorld()));
+//        final RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(this.signLocation.getWorld()));
+        RegionManager regionManager = WorldGuardPlugin.inst().getRegionContainer().get(this.signLocation.getWorld());
         if (regionManager == null) {
             return null;
         }
