@@ -5,7 +5,8 @@ import com.gotofinal.darkrise.plots.config.ConfigHandler;
 import com.gotofinal.darkrise.plots.events.PlotUpdateEvent;
 import com.gotofinal.darkrise.plots.util.StringUtil;
 import com.gotofinal.darkrise.plots.util.TimeUtil;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.apache.commons.lang.builder.ToStringBuilder;
@@ -13,7 +14,11 @@ import org.apache.commons.lang.builder.ToStringStyle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
+import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -63,6 +68,29 @@ public class Plot {
         }
 
         sign.update();
+
+        if (isGracePeriod()) { //We're in a grace period
+            BlockFace dir = ((org.bukkit.material.Sign) sign.getBlock().getState().getData()).getFacing();
+            Block back = sign.getBlock().getRelative(dir.getOppositeFace());
+            for (int i = 0; i < 2; i++) {
+                if (back.getType() == Material.OAK_FENCE)
+                    continue;
+                back = back.getRelative(BlockFace.UP);
+                back.setType(Material.OAK_FENCE);
+            }
+
+            if (back.getRelative(dir).getType() != Material.RED_WALL_BANNER) {
+                back.getRelative(dir).setType(Material.RED_WALL_BANNER);
+                Directional banner = (Directional) back.getRelative(dir).getBlockData();
+                banner.setFacing(dir);
+                back.getRelative(dir).setBlockData(banner);
+            }
+        }
+    }
+
+    public boolean isGracePeriod() {
+        long current = System.currentTimeMillis();
+        return this.expiry < current && current < finalExpiry;
     }
 
     /**
@@ -88,8 +116,8 @@ public class Plot {
         list.add((this.type.getDisplayName() != null) ? this.type.getDisplayName() : this.type.getName());
         if (this.expiry > -1) {
             long current = System.currentTimeMillis();
-            String time = TimeUtil.getSingleTimeUnit((this.expiry > current ? this.expiry : this.finalExpiry) - current);
-            String line = this.expiry > current ? "Exp: " : "GP: ";
+            String time = TimeUtil.getSingleTimeUnit((!isGracePeriod() ? this.expiry : this.finalExpiry) - current);
+            String line = !isGracePeriod() ? "Exp: " : "GP: ";
             list.add(line + time);
             list.add(this.owner);
         } else {
@@ -139,8 +167,8 @@ public class Plot {
             return null;
         }
 
-//        final RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(this.signLocation.getWorld()));
-        RegionManager regionManager = WorldGuardPlugin.inst().getRegionContainer().get(this.signLocation.getWorld());
+        final RegionManager regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(this.signLocation.getWorld()));
+//        RegionManager regionManager = WorldGuardPlugin.inst().getRegionContainer().get(this.signLocation.getWorld());
         if (regionManager == null) {
             return null;
         }

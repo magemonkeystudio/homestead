@@ -5,7 +5,7 @@ import com.gotofinal.darkrise.plots.config.ConfigHandler;
 import com.gotofinal.darkrise.plots.events.ConfigReloadEvent;
 import com.gotofinal.darkrise.plots.events.PlotUpdateEvent;
 import com.gotofinal.darkrise.plots.util.Util;
-import com.sk89q.worldedit.BlockVector;
+import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.travja.darkrise.core.bungee.BungeeUtil;
 import me.travja.darkrise.core.legacy.util.Vault;
@@ -413,8 +413,8 @@ public class PlotsListener implements Listener {
     public int countMaterial(final ProtectedRegion region, final World world, final MaterialData data) {
 
         int counter = 0;
-        final BlockVector min = region.getMinimumPoint();
-        final BlockVector max = region.getMaximumPoint();
+        final BlockVector3 min = region.getMinimumPoint();
+        final BlockVector3 max = region.getMaximumPoint();
 
         for (int x = min.getBlockX(); x <= max.getBlockX(); x++) {
             for (int y = min.getBlockY(); y <= max.getBlockY(); y++) {

@@ -3,6 +3,8 @@ package com.gotofinal.darkrise.plots.deeds;
 import com.gotofinal.darkrise.plots.DarkRisePlots;
 import com.gotofinal.darkrise.plots.util.ConfigUtil;
 import com.gotofinal.darkrise.plots.util.Serialization;
+import com.sk89q.worldedit.bukkit.BukkitAdapter;
+import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.managers.RegionManager;
 import com.sk89q.worldguard.protection.managers.storage.StorageException;
@@ -48,8 +50,8 @@ public class PlotManager {
 
         cs = ConfigUtil.getOrCreateConfigurationSection(cs, this.world.getName());
 
-        this.regionManager = WorldGuardPlugin.inst().getRegionContainer().get(this.world);
-//        this.regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(this.world));
+//        this.regionManager = WorldGuardPlugin.inst().getRegionContainer().get(this.world);
+        this.regionManager = WorldGuard.getInstance().getPlatform().getRegionContainer().get(BukkitAdapter.adapt(this.world));
 
         // Lets make sure WorldGuard is enabled in this world.
         if (this.regionManager == null) {
