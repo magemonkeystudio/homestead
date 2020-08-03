@@ -1,41 +1,37 @@
 package com.gotofinal.darkrise.plots.deeds;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.material.MaterialData;
+
+import java.util.Arrays;
 
 /**
  * Represents a Deed that can be used for Plots.
  */
-public class Deed
-{
+public class Deed {
 
     private final String name;
-//    private final Map<MaterialData, Integer> limitedBlocks = new HashMap<>(20);
-    private       String displayName;
-    private       String description;
-    private       int    friends;
-    private       double tax;
-    private       double dropChance;
-    private       int    maximumExtensionTime;
-    private       int    initialExtensionTime;
-    private       int    extensionTime;
+    //    private final Map<MaterialData, Integer> limitedBlocks = new HashMap<>(20);
+    private String displayName;
+    private String description;
+    private int friends;
+    private double tax;
+    private double dropChance;
+    private int maximumExtensionTime;
+    private int initialExtensionTime;
+    private int extensionTime;
+    private int customData;
 
     /**
      * Constructs a new Deed with {@code name} and default values. Please see the setter methods.
      *
      * @param name name of this deed type
      */
-    public Deed(final String name)
-    {
+    public Deed(final String name) {
         this.name = name;
     }
 
@@ -43,11 +39,9 @@ public class Deed
      * Creates an {@link org.bukkit.inventory.ItemStack} out of this Deed's values.
      *
      * @return an ItemStack object with amount set to 1
-     *
      * @see #toItemStack(int)
      */
-    public ItemStack toItemStack()
-    {
+    public ItemStack toItemStack() {
         return this.toItemStack(1);
     }
 
@@ -55,18 +49,20 @@ public class Deed
      * Creates an {@link org.bukkit.inventory.ItemStack} out of this Deed's values.
      *
      * @param amount amount to create this ItemStack with
-     *
      * @return an ItemStack object
      */
-    public ItemStack toItemStack(final int amount)
-    {
+    public ItemStack toItemStack(final int amount) {
         final ItemStack item = new ItemStack(Material.PAPER, amount);
         final ItemMeta im = item.getItemMeta();
         im.setDisplayName(this.displayName);
-        if ((this.description != null) && ! this.description.isEmpty())
-        {
+        if ((this.description != null) && !this.description.isEmpty()) {
             im.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', this.description).split("\\n")));
         }
+
+        if (this.customData != -1) {
+            im.setCustomModelData(customData);
+        }
+
         item.setItemMeta(im);
         return item;
     }
@@ -76,8 +72,7 @@ public class Deed
      *
      * @return name of this Deed
      */
-    public String getName()
-    {
+    public String getName() {
         return this.name;
     }
 
@@ -87,8 +82,7 @@ public class Deed
      *
      * @return the display name
      */
-    public String getDisplayName()
-    {
+    public String getDisplayName() {
         return this.displayName;
     }
 
@@ -97,28 +91,23 @@ public class Deed
      *
      * @param displayName the display name to set
      */
-    public void setDisplayName(final String displayName)
-    {
+    public void setDisplayName(final String displayName) {
         this.displayName = displayName;
     }
 
-    public String getDescription()
-    {
+    public String getDescription() {
         return this.description;
     }
 
-    public void setDescription(final String description)
-    {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
-    public int getFriends()
-    {
+    public int getFriends() {
         return this.friends;
     }
 
-    public void setFriends(final int friends)
-    {
+    public void setFriends(final int friends) {
         this.friends = friends;
     }
 
@@ -127,8 +116,7 @@ public class Deed
      *
      * @return the tax to set
      */
-    public double getTax()
-    {
+    public double getTax() {
         return this.tax;
     }
 
@@ -137,8 +125,7 @@ public class Deed
      *
      * @param tax tax to set
      */
-    public void setTax(final double tax)
-    {
+    public void setTax(final double tax) {
         this.tax = tax;
     }
 
@@ -147,8 +134,7 @@ public class Deed
      *
      * @return double value of the drop chance
      */
-    public double getDropChance()
-    {
+    public double getDropChance() {
         return this.dropChance;
     }
 
@@ -157,8 +143,7 @@ public class Deed
      *
      * @param dropChance the drop chance to set
      */
-    public void setDropChance(final double dropChance)
-    {
+    public void setDropChance(final double dropChance) {
         this.dropChance = dropChance;
     }
 
@@ -167,8 +152,7 @@ public class Deed
      *
      * @return the maximum extension time
      */
-    public int getMaximumExtensionTime()
-    {
+    public int getMaximumExtensionTime() {
         return this.maximumExtensionTime;
     }
 
@@ -177,8 +161,7 @@ public class Deed
      *
      * @param maximumExtensionTime the maximum extension time to set
      */
-    public void setMaximumExtensionTime(final int maximumExtensionTime)
-    {
+    public void setMaximumExtensionTime(final int maximumExtensionTime) {
         this.maximumExtensionTime = maximumExtensionTime;
     }
 
@@ -187,8 +170,7 @@ public class Deed
      *
      * @return the initial extension time
      */
-    public int getInitialExtensionTime()
-    {
+    public int getInitialExtensionTime() {
         return this.initialExtensionTime;
     }
 
@@ -197,8 +179,7 @@ public class Deed
      *
      * @param initialExtensionTime the initial extension time to set
      */
-    public void setInitialExtensionTime(final int initialExtensionTime)
-    {
+    public void setInitialExtensionTime(final int initialExtensionTime) {
         this.initialExtensionTime = initialExtensionTime;
     }
 
@@ -207,8 +188,7 @@ public class Deed
      *
      * @return the extension time
      */
-    public int getExtensionTime()
-    {
+    public int getExtensionTime() {
         return this.extensionTime;
     }
 
@@ -217,8 +197,7 @@ public class Deed
      *
      * @param extensionTime the initial extension time to set
      */
-    public void setExtensionTime(final int extensionTime)
-    {
+    public void setExtensionTime(final int extensionTime) {
         this.extensionTime = extensionTime;
     }
 
@@ -292,9 +271,12 @@ public class Deed
 //        return false;
 //    }
 
+    public void setCustomData(int data) {
+        this.customData = data;
+    }
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString()).append("name", this.name)
                 /*.append("limitedBlocks", this.limitedBlocks)*/.append("displayName", this.displayName).append("description", this.description)
                 .append("friends", this.friends).append("tax", this.tax).append("dropChance", this.dropChance)

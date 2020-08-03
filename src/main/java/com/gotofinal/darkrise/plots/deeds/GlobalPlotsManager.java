@@ -134,6 +134,7 @@ public class GlobalPlotsManager {
         type.setMaximumExtensionTime(ConfigUtil.getOrSet(cs, "maximum-extension-time", 24));
         type.setInitialExtensionTime(ConfigUtil.getOrSet(cs, "initial-extension-time", 24));
         type.setExtensionTime(ConfigUtil.getOrSet(cs, "extension-time", 24));
+        type.setCustomData(ConfigUtil.getOrSet(cs, "custom-data", -1));
 
 //        cs = cs.getConfigurationSection("limited-blocks");
 //        if (cs != null)
