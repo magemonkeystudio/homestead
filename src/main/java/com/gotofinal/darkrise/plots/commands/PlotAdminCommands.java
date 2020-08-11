@@ -152,6 +152,7 @@ public class PlotAdminCommands {
         final int seconds = args.getInteger(1);
         final long expiryTime = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(seconds);
         plot.setExpiry(expiryTime);
+        plot.setFinalExpiry(expiryTime);
         sender.sendMessage(ChatColor.YELLOW + "'" + plot.getName() + "' is going to expire in " + seconds + ".");
     }
 

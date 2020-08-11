@@ -128,7 +128,12 @@ public class BungeeListener implements PluginMessageListener {
             }
         });
 
-        handlers.put("PlotRunCommand", (in, player) -> Bukkit.getPlayer(in.readUTF()).performCommand(in.readUTF()));
+        handlers.put("PlotRunCommand", (in, player) -> {
+            Player pl = Bukkit.getPlayer(in.readUTF());
+            String cmd = in.readUTF();
+            System.out.println("Received command: " + cmd);
+            pl.performCommand(cmd);
+        });
     }
 
     @Override

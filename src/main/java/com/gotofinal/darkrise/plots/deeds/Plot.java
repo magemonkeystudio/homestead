@@ -70,12 +70,14 @@ public class Plot {
         sign.update();
 
         if (isGracePeriod()) { //We're in a grace period
-            BlockFace dir = ((org.bukkit.material.Sign) sign.getBlock().getState().getData()).getFacing();
+            if (sign.getBlock() == null || sign.getBlock().getState() == null || sign.getBlock().getState().getData() == null || !(sign.getBlock().getState().getData() instanceof Directional))
+                return;
+            BlockFace dir = ((Directional) sign.getBlock().getState().getData()).getFacing();
             Block back = sign.getBlock().getRelative(dir.getOppositeFace());
             for (int i = 0; i < 2; i++) {
+                back = back.getRelative(BlockFace.UP);
                 if (back.getType() == Material.OAK_FENCE)
                     continue;
-                back = back.getRelative(BlockFace.UP);
                 back.setType(Material.OAK_FENCE);
             }
 
@@ -84,6 +86,14 @@ public class Plot {
                 Directional banner = (Directional) back.getRelative(dir).getBlockData();
                 banner.setFacing(dir);
                 back.getRelative(dir).setBlockData(banner);
+            }
+        } else {
+            if (sign.getBlock() == null || sign.getBlock().getState() == null || sign.getBlock().getState().getData() == null || !(sign.getBlock().getState().getData() instanceof Directional))
+                return;
+            Block ban = sign.getBlock().getRelative(0, 2, 0);
+
+            if (ban.getType() == Material.RED_WALL_BANNER) {
+                ban.setType(Material.AIR);
             }
         }
     }
