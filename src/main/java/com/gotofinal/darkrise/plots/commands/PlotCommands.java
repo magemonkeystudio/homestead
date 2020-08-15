@@ -7,7 +7,10 @@ import com.gotofinal.darkrise.plots.deeds.PlotManager;
 import com.gotofinal.darkrise.plots.util.Util;
 import com.gotofinal.darkrise.plots.util.bungee.BungeeCommandException;
 import com.gotofinal.darkrise.plots.util.pagination.SimplePaginatedResult;
-import com.sk89q.minecraft.util.commands.*;
+import com.sk89q.minecraft.util.commands.Command;
+import com.sk89q.minecraft.util.commands.CommandContext;
+import com.sk89q.minecraft.util.commands.CommandPermissions;
+import com.sk89q.minecraft.util.commands.NestedCommand;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import me.travja.darkrise.core.legacy.util.Vault;
 import me.travja.darkrise.core.legacy.util.message.MessageData;
@@ -23,6 +26,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class PlotCommands {
 
@@ -128,14 +133,103 @@ public class PlotCommands {
             MessageUtil.sendMessage("plots.commands.plot.home.notMember", player, new MessageData("plot", plot), new MessageData("player", target));
             return;
         }
-        player.teleport(plot.getHome());
-        //noinspection ObjectEquality
-        if (target == player) {
-            MessageUtil.sendMessage("plots.commands.plot.home.own", sender, new MessageData("player", player), new MessageData("plot", plot));
-        } else {
-            MessageUtil.sendMessage("plots.commands.plot.home.other", sender, new MessageData("player", player), new MessageData("target", target), new MessageData("plot", plot));
+
+        if (getCooldown(player) > 0) {
+            MessageUtil.sendMessage("plots.commands.plot.home.cooldown", player,
+                    new MessageData("plot", plot),
+                    new MessageData("player", target),
+                    new MessageData("time", getCooldown(player)));
+            return;
+        }
+
+        startWarmup(player, target, plot);
+    }
+
+    private HashMap<UUID, Long> cooldown = new HashMap<>();
+    private static HashMap<UUID, Integer> warmup = new HashMap<>();
+
+    public long getCooldown(Player player) {
+        if (!cooldown.containsKey(player.getUniqueId()) || player.hasPermission("pmco.cmd.home.cooldown.bypass"))
+            return 0;
+
+        long expiration = cooldown.get(player.getUniqueId());
+        long left = expiration - System.currentTimeMillis();
+        long leftSeconds = TimeUnit.MILLISECONDS.toSeconds(left);
+
+        if (left > 0)
+            return leftSeconds <= 0 ? 1 : leftSeconds;
+        else {
+            cooldown.remove(player.getUniqueId());
+            return 0;
         }
     }
+
+    private void startWarmup(Player player, Player target, Plot plot) {
+        if (warmup.containsKey(player.getUniqueId())) { //Cancel any previous task before starting a new one
+            Bukkit.getScheduler().cancelTask(warmup.get(player.getUniqueId()));
+            warmup.remove(player.getUniqueId());
+        }
+
+        int warmupTime = DarkRisePlots.getInstance().getConfigHandler().getInt(ConfigHandler.HOME_WARMUP);
+
+        if (warmupTime > 0 && !player.hasPermission("pmco.cmd.home.warmup.bypass")) {
+            MessageUtil.sendMessage("plots.commands.plot.home.warmup", player,
+                    new MessageData("player", player),
+                    new MessageData("time", warmupTime));
+
+            int task = Bukkit.getScheduler().scheduleSyncDelayedTask(DarkRisePlots.getInstance(), () -> {
+                player.teleport(plot.getHome());
+                warmup.remove(player.getUniqueId());
+
+                if (!player.hasPermission("pmco.cmd.home.cooldown.bypass")) {
+                    int cooldownTime = DarkRisePlots.getInstance().getConfigHandler().getInt(ConfigHandler.HOME_COOLDOWN);
+                    long expiry = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(cooldownTime);
+                    cooldown.put(player.getUniqueId(), expiry);
+                }
+
+                //noinspection ObjectEquality
+                if (target == player) {
+                    MessageUtil.sendMessage("plots.commands.plot.home.own", player, new MessageData("player", player), new MessageData("plot", plot));
+                } else {
+                    MessageUtil.sendMessage("plots.commands.plot.home.other", player, new MessageData("player", player), new MessageData("target", target), new MessageData("plot", plot));
+                }
+            }, warmupTime * 20);
+            warmup.put(player.getUniqueId(), task);
+        } else {
+            player.teleport(plot.getHome());
+            //noinspection ObjectEquality
+            if (target == player) {
+                MessageUtil.sendMessage("plots.commands.plot.home.own", player, new MessageData("player", player), new MessageData("plot", plot));
+            } else {
+                MessageUtil.sendMessage("plots.commands.plot.home.other", player, new MessageData("player", player), new MessageData("target", target), new MessageData("plot", plot));
+            }
+        }
+    }
+
+    public static void cancelWarmup(Player player) {
+        if (warmup.containsKey(player.getUniqueId())) { //Cancel any previous task before starting a new one
+            Bukkit.getScheduler().cancelTask(warmup.get(player.getUniqueId()));
+            warmup.remove(player.getUniqueId());
+            MessageUtil.sendMessage("plots.commands.plot.home.warmup-cancelled", player,
+                    new MessageData("player", player));
+        }
+    }
+
+    public static void removeWarmup(Player player) {
+        if (warmup.containsKey(player.getUniqueId())) { //Cancel any previous task before starting a new one
+            Bukkit.getScheduler().cancelTask(warmup.get(player.getUniqueId()));
+            warmup.remove(player.getUniqueId());
+        }
+    }
+
+    public static void addWarmup(Player player) {
+        warmup.put(player.getUniqueId(), -1);
+    }
+
+    public static boolean isWarmup(Player player) {
+        return warmup.containsKey(player.getUniqueId());
+    }
+
 
     // added by GotoFinal stop.
     @Command(aliases = {"sell"}, desc = "This command sells the command sender's plot to a player.", usage = "<player> <price>", min = 1, max = 2)

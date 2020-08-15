@@ -3,6 +3,7 @@ package me.travja.darkrise.plots.bungee;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.Connection;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -157,6 +158,8 @@ public class BungeeListener implements Listener {
                 }
                 plot.setServer(((Server) sender).getInfo());
                 Bridge.getPlotManager().addPlot(plot);
+            } else if(command.equalsIgnoreCase("CANCEL_HOME")) {
+                BungeePlotCommands.cancelWarmup(ProxyServer.getInstance().getPlayer(msgin.readUTF()));
             } else {
                 ArrayList<String> messages = new ArrayList<>();
                 messages.add(idstr);

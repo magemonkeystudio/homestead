@@ -65,11 +65,17 @@ public class Bridge extends Plugin {
     private static void loadConfig() {
         try {
             File file = new File(instance.getDataFolder(), "config.yml");
-            if (!file.exists()) {
+            boolean newFile = !file.exists();
+            if (newFile) {
                 file.getParentFile().mkdirs();
                 file.createNewFile();
             }
             config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(file);
+            if (newFile) { //set defaults
+                config.set("home-cooldown", 10);
+                config.set("home-warmup", 5);
+                saveConfig();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

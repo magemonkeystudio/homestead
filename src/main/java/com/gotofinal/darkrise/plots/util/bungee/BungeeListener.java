@@ -3,6 +3,7 @@ package com.gotofinal.darkrise.plots.util.bungee;
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
 import com.gotofinal.darkrise.plots.DarkRisePlots;
+import com.gotofinal.darkrise.plots.commands.PlotCommands;
 import com.gotofinal.darkrise.plots.config.ConfigHandler;
 import com.gotofinal.darkrise.plots.deeds.GlobalPlotsManager;
 import com.gotofinal.darkrise.plots.deeds.Plot;
@@ -39,6 +40,7 @@ public class BungeeListener implements PluginMessageListener {
 
                 Location plotLoc = plot.getHome();
                 player.teleport(plotLoc);
+                PlotCommands.removeWarmup(player);
 
                 OfflinePlayer targetPlayer = Bukkit.getPlayer(plot.getOwner());
                 if (plot.getOwner().equalsIgnoreCase(player.getName())) {
@@ -71,17 +73,17 @@ public class BungeeListener implements PluginMessageListener {
                         else if (type.startsWith("w:"))
                             obj = Bukkit.getWorld(data);
                         else if (type.startsWith("plot:")) {
-                            System.out.println("Attempting to find plot " + data);
                             obj = DarkRisePlots.getInstance().getGlobalPlotsManager().getPlot(data);
                             Plot pl = ((Plot) obj);
-                            System.out.println("Region: " + pl.getProtectedRegion());
-                            System.out.println("Players: " + pl.getProtectedRegion().getMembers());
-                        } else if (obj == null)
+                        } else
+                            obj = type;
+
+
+                        if (obj == null)
                             DarkRisePlots.getInstance().getLogger().severe("Could not create mapping for " + type);
 
 
                         replacements.add(new MessageData(rep, obj));
-                        System.out.println("Will map " + rep + " to " + type);
                     }
                 } catch (Exception e) {
                 } finally {
@@ -123,7 +125,6 @@ public class BungeeListener implements PluginMessageListener {
 
         handlers.put("FETCHPlotInfo", (in, player) -> {
             for (Plot plot : DarkRisePlots.getInstance().getGlobalPlotsManager().getAllPlots()) {
-                System.out.println("Sending data for plot " + plot.getName());
                 BungeeUtil.sendMessage(plot.dataToArray().toArray(new String[0]));
             }
         });
@@ -131,8 +132,11 @@ public class BungeeListener implements PluginMessageListener {
         handlers.put("PlotRunCommand", (in, player) -> {
             Player pl = Bukkit.getPlayer(in.readUTF());
             String cmd = in.readUTF();
-            System.out.println("Received command: " + cmd);
             pl.performCommand(cmd);
+        });
+
+        handlers.put("PlotsWarmingUp", (in, player) -> {
+            PlotCommands.addWarmup(player);
         });
     }
 
@@ -146,7 +150,6 @@ public class BungeeListener implements PluginMessageListener {
         String sender = in.readUTF();
         BungeeUtil.sendResponse(id, "PlotsReceived");
         String one = in.readUTF();
-        System.out.println("Received " + one);
         if (handlers.containsKey(one)) {
             handlers.get(one).run(in, player);
         } else

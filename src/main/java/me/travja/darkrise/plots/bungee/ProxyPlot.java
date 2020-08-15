@@ -133,7 +133,6 @@ public class ProxyPlot {
      */
     public void setOwner(String owner) {
         this.owner = owner.toLowerCase();
-        System.out.println("Owner now " + owner);
         //Tell Bungee to update its records
         if (server != null)
             CordUtil.sendBungeeMessage(server, "PlotsSetOwner", this.getName(), this.owner);

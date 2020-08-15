@@ -25,6 +25,8 @@ public class ConfigHandler
     public static final Property<Integer> SELL_DISTANCE = new Property<>("plots.sell.distance", 8);
     public static final Property<Integer> GRACE_PERIOD = new Property<>("plots.expiry.grace_period", 48);
     public static final Property<Integer> WARN_INTERVAL = new Property<>("plots.expiry.warn_interval", 30);
+    public static final Property<Integer> HOME_COOLDOWN = new Property<>("home-cooldown", 10);
+    public static final Property<Integer> HOME_WARMUP = new Property<>("home-warmup", 5);
     public final boolean IS_BUNGEE;
     public final String BUNGEE_ID;
     //public static final Property<List<String>> CHEST_COMMANDS = new Property<>("chest-commands", Collections.<String>emptyList());

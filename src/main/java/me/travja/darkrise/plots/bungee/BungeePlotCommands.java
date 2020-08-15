@@ -1,5 +1,6 @@
 package me.travja.darkrise.plots.bungee;
 
+import com.gotofinal.darkrise.plots.commands.PlotCommands;
 import com.gotofinal.darkrise.plots.util.StringUtil;
 import com.gotofinal.darkrise.plots.util.bungee.BungeeCommandException;
 import com.gotofinal.darkrise.plots.util.pagination.SimplePaginatedResult;
@@ -8,22 +9,24 @@ import me.travja.darkrise.plots.bungee.util.CordUtil;
 import me.travja.darkrise.plots.bungee.util.DataUtil;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import static me.travja.darkrise.plots.bungee.util.DataUtil.getHomeServer;
 
 public class BungeePlotCommands extends Command {
 
     private static final String ADD_LIMIT = "add.limit";
-    private final HashMap<String, com.gotofinal.darkrise.plots.commands.PlotCommands.PlotPurchase> plotsForSale = new HashMap<>(50);
+    private final HashMap<String, PlotCommands.PlotPurchase> plotsForSale = new HashMap<>(50);
     private String usage;
     private Bridge plugin;
 
@@ -55,6 +58,8 @@ public class BungeePlotCommands extends Command {
                 sell(sender, left);
             else if (subCommand.equalsIgnoreCase("home"))
                 home(sender, left);
+            else if (subCommand.equalsIgnoreCase("cancelhome"))
+                cancelWarmup((ProxiedPlayer) sender);
             else if (subCommand.equalsIgnoreCase("list"))
                 list(sender, left);
             else {//If it's not something that should execute on the bungee itself, send it to the server
@@ -139,10 +144,40 @@ public class BungeePlotCommands extends Command {
 
         final ProxyPlot plot = this.getPlot(target);
         if (!(plot.hasPlayer(player.getName()) || plot.isOwner(player.getName()))) {
-            CordUtil.sendMessage(player, "$plots.commands.plot.home.notMember", "plot", "plot:" + plot.getName(), "player", "p:" + target);
+            CordUtil.sendMessage(player, "$plots.commands.plot.home.notMember", "plot", "plot:" + plot.getName(), "player", "p:" + target.getName());
             return;
         }
 
+        if (getCooldown(player) > 0) {
+            CordUtil.sendMessage(player, "$plots.commands.plot.home.cooldown",
+                    "plot", "plot:" + plot.getName(), "player", "p:" + player.getName(),
+                    "target", "p:" + target.getName(), "time", String.valueOf(getCooldown(player)));
+            return;
+        }
+
+        startWarmup(player, target, plot);
+    }
+
+    private HashMap<UUID, Long> cooldown = new HashMap<>();
+    private static HashMap<UUID, Integer> warmup = new HashMap<>();
+
+    public long getCooldown(ProxiedPlayer player) {
+        if (!cooldown.containsKey(player.getUniqueId()) || player.hasPermission("pmco.cmd.home.cooldown.bypass"))
+            return 0;
+
+        long expiration = cooldown.get(player.getUniqueId());
+        long left = expiration - System.currentTimeMillis();
+        long leftSeconds = TimeUnit.MILLISECONDS.toSeconds(left);
+
+        if (left > 0)
+            return leftSeconds <= 0 ? 1 : leftSeconds;
+        else {
+            cooldown.remove(player.getUniqueId());
+            return 0;
+        }
+    }
+
+    private void teleport(ProxiedPlayer player, ProxiedPlayer target, ProxyPlot plot) {
         String serverStr = getHomeServer(target.getName());
         ServerInfo destServer = Bridge.getInstance().getProxy().getServerInfo(serverStr);
         if (!serverStr.equals(player.getServer().getInfo().getName())) {
@@ -157,9 +192,48 @@ public class BungeePlotCommands extends Command {
         CordUtil.sendBungeeMessage(destServer, "TPPlotHome", player.getName(), plot.getName());
     }
 
+    public void startWarmup(ProxiedPlayer player, ProxiedPlayer target, ProxyPlot plot) {
+        if (warmup.containsKey(player.getUniqueId())) { //Cancel any previous task before starting a new one
+            ProxyServer.getInstance().getScheduler().cancel(warmup.get(player.getUniqueId()));
+            warmup.remove(player.getUniqueId());
+        }
+
+        int warmupTime = Bridge.getConfig().getInt("home-warmup");
+
+        if (warmupTime > 0 && !player.hasPermission("pmco.cmd.home.warmup.bypass")) {
+            CordUtil.sendMessage(player, "$plots.commands.plot.home.warmup",
+                    "plot", "plot:" + plot.getName(), "player", "p:" + player.getName(), "target", "p:" + target.getName(),
+                    "time", String.valueOf(warmupTime));
+
+            CordUtil.sendBungeeMessage(player, "PlotsWarmingUp");
+            int task = ProxyServer.getInstance().getScheduler().schedule(Bridge.getInstance(), () -> {
+                teleport(player, target, plot);
+                warmup.remove(player.getUniqueId());
+
+                if (!player.hasPermission("pmco.cmd.home.cooldown.bypass")) {
+                    int cooldownTime = Bridge.getConfig().getInt("home-cooldown");
+                    long expiry = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(cooldownTime);
+                    cooldown.put(player.getUniqueId(), expiry);
+                }
+            }, warmupTime, TimeUnit.SECONDS).getId();
+            warmup.put(player.getUniqueId(), task);
+        } else {
+            teleport(player, target, plot);
+        }
+    }
+
+    public static void cancelWarmup(ProxiedPlayer player) {
+        if (warmup.containsKey(player.getUniqueId())) { //Cancel any previous task before starting a new one
+            ProxyServer.getInstance().getScheduler().cancel(warmup.get(player.getUniqueId()));
+            warmup.remove(player.getUniqueId());
+            CordUtil.sendMessage(player, "$plots.commands.plot.home.warmup-cancelled",
+                    "player", "p:" + player.getName());
+        }
+    }
+
     @CommandPermissions("pmco.cmd.plot.sell")
     public void sell(CommandSender sender, String[] args) throws BungeeCommandException {
-        if(args.length == 0) {
+        if (args.length == 0) {
             throw new BungeeCommandException("/" + getName() + " sell <player> [price]");
         }
         ProxiedPlayer player = (ProxiedPlayer) sender;
@@ -167,7 +241,6 @@ public class BungeePlotCommands extends Command {
         final ProxyPlot plot = this.getPlot(player);
 
         // Lets check if the plot has no players added to it to prevent grief.
-        System.out.println("Players: " + StringUtil.join((ArrayList<String>) plot.getPlayers()));
         if (!plot.getPlayers().isEmpty() && plot.getPlayers().size() > 1) {
             throw new BungeeCommandException("Please remove all players to sell your plot.");
         }
@@ -184,7 +257,6 @@ public class BungeePlotCommands extends Command {
         if (getPlot(buyer) != null && getPlot(buyer).isOwner(buyer.getName()))
             throw new BungeeCommandException("That player already owns a plot.");
 
-        System.out.println("Players in Plot: " + plot.getPlayers().size());
         if (!plot.getPlayers().isEmpty() || plot.getPlayers().size() > 1) {
             throw new BungeeCommandException("Please remove all your friends before selling the plot.");
         }

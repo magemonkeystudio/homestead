@@ -13,5 +13,7 @@ plots:
     expiry:
         grace_period: 48
         warn_interval: 30
+home-cooldown: 10
+home-warmup: 5
 bungee: true
 bungee-id: server_name

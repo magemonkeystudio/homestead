@@ -9,6 +9,9 @@ plots:
         other: "&7Teleported to plot: &3$<plot.name> &7owned by &3$<target.name>&7."
         own: "&7Teleported to own plot."
         notMember: "&7You need to be member of this plot."
+        cooldown: "&cYou must wait &3$<time>s &cto use this command again."
+        warmup: "&ePlease hold still for &b$<time>s &ein order to be teleported."
+        warmup-cancelled: "&cTeleport cancelled!"
       admin:
         setHome: "&7You set home of &3$plot.name>&7 plot to &3$<location.x> $<location.y> $<location.z>"
       sell:

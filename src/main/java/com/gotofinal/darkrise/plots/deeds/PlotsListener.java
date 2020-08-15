@@ -1,6 +1,7 @@
 package com.gotofinal.darkrise.plots.deeds;
 
 import com.gotofinal.darkrise.plots.DarkRisePlots;
+import com.gotofinal.darkrise.plots.commands.PlotCommands;
 import com.gotofinal.darkrise.plots.config.ConfigHandler;
 import com.gotofinal.darkrise.plots.events.ConfigReloadEvent;
 import com.gotofinal.darkrise.plots.events.PlotUpdateEvent;
@@ -23,6 +24,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPhysicsEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -298,6 +300,22 @@ public class PlotsListener implements Listener {
             }
             SignUpdater.getUnupdated().remove(key);
         }, 20);
+    }
+
+    @EventHandler
+    public void cancelWarmup(PlayerMoveEvent event) {
+        if (!PlotCommands.isWarmup(event.getPlayer()))
+            return;
+
+        Block from = event.getFrom().getBlock();
+        Block to = event.getTo().getBlock();
+        if (!from.equals(to)) {
+            if (DarkRisePlots.getInstance().getConfigHandler().IS_BUNGEE) {
+                BungeeUtil.sendMessage(BungeeUtil.CHANNEL, event.getPlayer(), "CANCEL_HOME", event.getPlayer().getName());
+                PlotCommands.removeWarmup(event.getPlayer());
+            } else
+                PlotCommands.cancelWarmup(event.getPlayer());
+        }
     }
 
     public Plot getPlotFromSign(final PlotManager manager, final Player player, final Sign sign) {
