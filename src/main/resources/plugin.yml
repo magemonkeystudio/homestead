@@ -1,8 +1,8 @@
-name: Plots
+name: ProMCHousing
 main: com.gotofinal.darkrise.plots.DarkRisePlots
 version: ${project.version}
 depend: [RiseCore, Economy, WorldGuard, Vault]
-authors: [Travja, GotoFinal, Goblom, SupaHam]
+authors: [Travja, GotoFinal]
 api-version: 1.13
 
 commands:

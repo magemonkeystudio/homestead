@@ -28,7 +28,7 @@ public class Bridge extends Plugin {
         plotManager = new BungeePlotManager(this);
         plotManager.loadAll();
 
-        getLogger().info("RisePlots-Bungee has been enabled!");
+        getLogger().info("ProMCHousing-Bungee has been enabled!");
     }
 
     @Override
