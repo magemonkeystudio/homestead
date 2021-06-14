@@ -75,7 +75,7 @@ public class PlotCommands {
     }
 
     @Command(aliases = {"remove"}, desc = "This command removes a player from the command sender's plot.", usage = "<player>", min = 1, max = 1)
-    @CommandPermissions("pmco.cmd.plot.remove")
+    @CommandPermissions("pmch.cmd.plot.remove")
     public void removePlayer(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
 
         if (!(sender instanceof Player)) {
@@ -100,7 +100,7 @@ public class PlotCommands {
     // added by GotoFinal start.
 
     @Command(aliases = {"players"}, desc = "This command print list of players added to the command sender's plot.", min = 0, max = 0)
-    @CommandPermissions("pmco.cmd.plot.players")
+    @CommandPermissions("pmch.cmd.plot.players")
     public void players(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
         if (!(sender instanceof Player)) {
             throw new BungeeCommandException("Only players can use this command.");
@@ -112,7 +112,7 @@ public class PlotCommands {
     }
 
     @Command(aliases = {"home"}, desc = "Teleport the command sender's plot.", usage = "[player]", min = 0, max = 1)
-    @CommandPermissions("pmco.cmd.plot.home")
+    @CommandPermissions("pmch.cmd.plot.home")
     public void home(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
         if (!(sender instanceof Player)) {
             throw new BungeeCommandException("Only players can use this command.");
@@ -149,7 +149,7 @@ public class PlotCommands {
     private static HashMap<UUID, Integer> warmup = new HashMap<>();
 
     public long getCooldown(Player player) {
-        if (!cooldown.containsKey(player.getUniqueId()) || player.hasPermission("pmco.cmd.home.cooldown.bypass"))
+        if (!cooldown.containsKey(player.getUniqueId()) || player.hasPermission("pmch.cmd.home.cooldown.bypass"))
             return 0;
 
         long expiration = cooldown.get(player.getUniqueId());
@@ -172,7 +172,7 @@ public class PlotCommands {
 
         int warmupTime = DarkRisePlots.getInstance().getConfigHandler().getInt(ConfigHandler.HOME_WARMUP);
 
-        if (warmupTime > 0 && !player.hasPermission("pmco.cmd.home.warmup.bypass")) {
+        if (warmupTime > 0 && !player.hasPermission("pmch.cmd.home.warmup.bypass")) {
             MessageUtil.sendMessage("plots.commands.plot.home.warmup", player,
                     new MessageData("player", player),
                     new MessageData("time", warmupTime));
@@ -181,7 +181,7 @@ public class PlotCommands {
                 player.teleport(plot.getHome());
                 warmup.remove(player.getUniqueId());
 
-                if (!player.hasPermission("pmco.cmd.home.cooldown.bypass")) {
+                if (!player.hasPermission("pmch.cmd.home.cooldown.bypass")) {
                     int cooldownTime = DarkRisePlots.getInstance().getConfigHandler().getInt(ConfigHandler.HOME_COOLDOWN);
                     long expiry = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(cooldownTime);
                     cooldown.put(player.getUniqueId(), expiry);
@@ -233,7 +233,7 @@ public class PlotCommands {
 
     // added by GotoFinal stop.
     @Command(aliases = {"sell"}, desc = "This command sells the command sender's plot to a player.", usage = "<player> <price>", min = 1, max = 2)
-    @CommandPermissions("pmco.cmd.plot.sell")
+    @CommandPermissions("pmch.cmd.plot.sell")
     public void sell(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
 
         if (!(sender instanceof Player)) {
@@ -314,7 +314,7 @@ public class PlotCommands {
     }
 
     @Command(aliases = {"buy"}, desc = "This command purchases a player's plot.", usage = "<player>", min = 1, max = 1)
-    @CommandPermissions("pmco.cmd.plot.buy")
+    @CommandPermissions("pmch.cmd.plot.buy")
     public void buy(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
 
         if (!(sender instanceof Player)) {
@@ -358,7 +358,7 @@ public class PlotCommands {
     }
 
     @Command(aliases = {"list"}, desc = "Lists all the plots.", usage = "[world]", help = "Lists all the plots in the command sender's world.\n " + "The [world] argument determines which world to list.\n " + "The -p flag determines which page to view.", min = 0, max = 1, flags = "p:")
-    @CommandPermissions("pmco.cmd.plot.list")
+    @CommandPermissions("pmch.cmd.plot.list")
     public void list(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
 
         final World world;
@@ -403,7 +403,7 @@ public class PlotCommands {
     }
 
     @Command(aliases = {"admin"}, desc = "Plot administrator commands.")
-    @CommandPermissions("pmco.cmd.plot.admin")
+    @CommandPermissions("pmch.cmd.plot.admin")
     @NestedCommand(PlotAdminCommands.class)
     public void admin(final CommandContext args, final CommandSender sender) {
     }
@@ -469,7 +469,7 @@ public class PlotCommands {
      * @return the limit of players the {@code player} can add to their plot, otherwise -1 for unlimited.
      */
     private int getAddLimit(final Player player) {
-        if (player.hasPermission("pmco.cmd.plot." + ADD_LIMIT + ".-1")) {
+        if (player.hasPermission("pmch.cmd.plot." + ADD_LIMIT + ".-1")) {
             return -1;
         }
         for (int i = 100; i >= 0; i--) {

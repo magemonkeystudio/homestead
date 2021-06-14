@@ -99,7 +99,7 @@ public class BungeePlotCommands extends Command {
         }
     }
 
-    @CommandPermissions("pmco.cmd.plot.remove")
+    @CommandPermissions("pmch.cmd.plot.remove")
     public void removePlayer(CommandSender sender, String[] args) throws BungeeCommandException {
         ProxiedPlayer player = (ProxiedPlayer) sender;
         final ProxyPlot plot = this.getPlot(player);
@@ -118,7 +118,7 @@ public class BungeePlotCommands extends Command {
         }
     }
 
-    @CommandPermissions("pmco.cmd.plot.players")
+    @CommandPermissions("pmch.cmd.plot.players")
     public void players(CommandSender sender, String[] args) throws BungeeCommandException {
         ProxiedPlayer player = (ProxiedPlayer) sender;
 
@@ -129,7 +129,7 @@ public class BungeePlotCommands extends Command {
         CordUtil.sendMessage(sender, "$plots.commands.plot.players.list", "plot", "plot:" + plot.getName());
     }
 
-    @CommandPermissions("pmco.cmd.plot.home")
+    @CommandPermissions("pmch.cmd.plot.home")
     public void home(CommandSender sender, String[] args) throws BungeeCommandException {
         ProxiedPlayer player = (ProxiedPlayer) sender;
         ProxiedPlayer target;
@@ -162,7 +162,7 @@ public class BungeePlotCommands extends Command {
     private static HashMap<UUID, Integer> warmup = new HashMap<>();
 
     public long getCooldown(ProxiedPlayer player) {
-        if (!cooldown.containsKey(player.getUniqueId()) || player.hasPermission("pmco.cmd.home.cooldown.bypass"))
+        if (!cooldown.containsKey(player.getUniqueId()) || player.hasPermission("pmch.cmd.home.cooldown.bypass"))
             return 0;
 
         long expiration = cooldown.get(player.getUniqueId());
@@ -200,7 +200,7 @@ public class BungeePlotCommands extends Command {
 
         int warmupTime = Bridge.getConfig().getInt("home-warmup");
 
-        if (warmupTime > 0 && !player.hasPermission("pmco.cmd.home.warmup.bypass")) {
+        if (warmupTime > 0 && !player.hasPermission("pmch.cmd.home.warmup.bypass")) {
             CordUtil.sendMessage(player, "$plots.commands.plot.home.warmup",
                     "plot", "plot:" + plot.getName(), "player", "p:" + player.getName(), "target", "p:" + target.getName(),
                     "time", String.valueOf(warmupTime));
@@ -210,7 +210,7 @@ public class BungeePlotCommands extends Command {
                 teleport(player, target, plot);
                 warmup.remove(player.getUniqueId());
 
-                if (!player.hasPermission("pmco.cmd.home.cooldown.bypass")) {
+                if (!player.hasPermission("pmch.cmd.home.cooldown.bypass")) {
                     int cooldownTime = Bridge.getConfig().getInt("home-cooldown");
                     long expiry = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(cooldownTime);
                     cooldown.put(player.getUniqueId(), expiry);
@@ -231,7 +231,7 @@ public class BungeePlotCommands extends Command {
         }
     }
 
-    @CommandPermissions("pmco.cmd.plot.sell")
+    @CommandPermissions("pmch.cmd.plot.sell")
     public void sell(CommandSender sender, String[] args) throws BungeeCommandException {
         if (args.length == 0) {
             throw new BungeeCommandException("/" + getName() + " sell <player> [price]");
@@ -271,7 +271,7 @@ public class BungeePlotCommands extends Command {
         }
     }
 
-    @CommandPermissions("pmco.cmd.plot.list")
+    @CommandPermissions("pmch.cmd.plot.list")
     public void list(CommandSender sender, String[] args) throws BungeeCommandException {
 
         int page = 1;
@@ -336,7 +336,7 @@ public class BungeePlotCommands extends Command {
      * @return the limit of players the {@code player} can add to their plot, otherwise -1 for unlimited.
      */
     private int getAddLimit(final ProxiedPlayer player) {
-        if (player.hasPermission("pmco.cmd.plot." + ADD_LIMIT + ".-1")) {
+        if (player.hasPermission("pmch.cmd.plot." + ADD_LIMIT + ".-1")) {
             return -1;
         }
         for (int i = 100; i >= 0; i--) {

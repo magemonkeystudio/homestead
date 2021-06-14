@@ -18,7 +18,7 @@ public class PMCOCommand {
     }
 
     @Command(aliases = {"reload", "rl"}, desc = "Reloads the configuration files.", usage = "[a]", help = "Reloads the configuration files.\n" + "The -a flag is used to determine whether all modules should be reloaded.", min = 0, max = 0, flags = "a")
-    @CommandPermissions("pmco.reload")
+    @CommandPermissions("pmch.reload")
     public void reload(final CommandContext args, final CommandSender sender) {
 
         this.plugin.reloadConfig();
@@ -30,7 +30,7 @@ public class PMCOCommand {
     }
 
     @Command(aliases = {"saveall", "save"}, desc = "Saves all the configuration files.", help = "Saves all the configuration files.", min = 0, max = 0)
-    @CommandPermissions("pmco.saveall")
+    @CommandPermissions("pmch.saveall")
     public void saveAll(final CommandContext args, final CommandSender sender) {
         this.plugin.getGlobalPlotsManager().saveAll();
         sender.sendMessage(ChatColor.YELLOW + "All configuration files saved successfully.");

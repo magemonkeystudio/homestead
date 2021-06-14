@@ -66,14 +66,14 @@ public class DeedCommands {
 
 
     @Command(aliases = {"reload", "rl"}, desc = "Reloads the Deeds configuration.", help = "Reloads the Deeds configuration.", min = 0, max = 0)
-    @CommandPermissions("pmco.deeds.reload")
+    @CommandPermissions("pmch.deeds.reload")
     public void reload(final CommandContext args, final CommandSender sender) {
         this.plugin.getGlobalPlotsManager().reloadConfig();
         sender.sendMessage(ChatColor.YELLOW + "You successfully reloaded Deeds configuration file.");
     }
 
     @Command(aliases = {"save"}, desc = "Saves the Deeds configuration.", help = "Saves the Deeds configuration.", min = 0, max = 0)
-    @CommandPermissions("pmco.deeds.save")
+    @CommandPermissions("pmch.deeds.save")
     public void save(final CommandContext args, final CommandSender sender) {
         this.plugin.getGlobalPlotsManager().saveAll();
         sender.sendMessage(ChatColor.YELLOW + "You successfully saved Deeds configuration file.");

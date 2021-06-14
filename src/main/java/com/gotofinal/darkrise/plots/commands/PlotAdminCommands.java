@@ -33,7 +33,7 @@ public class PlotAdminCommands {
     }
 
     @Command(aliases = {"create", "c"}, desc = "Creates a new plot for deeds", usage = "<id> <deed>", help = "The <id> argument is the id to create the plot with.\n" + "The <deed> argument is the deed to create the plot with.\n" + "The -w flag is the world to create the plot in.", min = 2, max = 2, flags = "w:")
-    @CommandPermissions("pmco.cmd.plot.admin.create")
+    @CommandPermissions("pmch.cmd.plot.admin.create")
     public void create(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
 
         final String id = args.getString(0);
@@ -66,7 +66,7 @@ public class PlotAdminCommands {
 
 
     @Command(aliases = {"remove", "rm"}, desc = "Removes a plot.", usage = "<id>", help = "The <id> argument is the id to remove the plot with.\n" + "The -w flag is the world to check for the plot in.", min = 1, max = 1, flags = "w:")
-    @CommandPermissions("pmco.cmd.plot.admin.remove")
+    @CommandPermissions("pmch.cmd.plot.admin.remove")
     public void remove(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
 
         final String id = args.getString(0);
@@ -80,7 +80,7 @@ public class PlotAdminCommands {
     // added by GotoFinal start
 
     @Command(aliases = {"sethome"}, desc = "Set home location of plot.", usage = "<id>", help = "The <id> argument is the id to create the plot with.", min = 1, max = 1)
-    @CommandPermissions("pmco.cmd.plot.admin.sethome")
+    @CommandPermissions("pmch.cmd.plot.admin.sethome")
     public void sethome(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
         if (!(sender instanceof Player)) {
             throw new BungeeCommandException("Only players can use this command.");
@@ -98,7 +98,7 @@ public class PlotAdminCommands {
 
     @SuppressWarnings("deprecation")
     @Command(aliases = {"sign"}, desc = "Sets the sign location of a plot.", usage = "<id>", help = "Sets the sign location of a plot.\n" + "The <id> argument is the id of the plot to modify.", min = 1, max = 1)
-    @CommandPermissions("pmco.cmd.plot.admin.sign")
+    @CommandPermissions("pmch.cmd.plot.admin.sign")
     public void sign(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
 
         if (!(sender instanceof Player)) {
@@ -122,7 +122,7 @@ public class PlotAdminCommands {
     }
 
     @Command(aliases = {"deed", "type"}, desc = "Sets the deed type of a plot.", usage = "<id> <deed>", help = "Sets the deed type of a plot.\n" + "The <id> argument is the id of the plot to modify.\n" + "The <deed> argument is the new deed this plot should be assigned.\n" + "The -w flag is the world to check for the plot in.", min = 2, max = 2, flags = "w:")
-    @CommandPermissions("pmco.cmd.plot.admin.deed")
+    @CommandPermissions("pmch.cmd.plot.admin.deed")
     public void deed(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
 
         final PlotManager mgr = this.getManager(args, sender, 'w');
@@ -139,7 +139,7 @@ public class PlotAdminCommands {
     }
 
     @Command(aliases = {"expiry"}, desc = "Sets the expiry time of a plot.", usage = "<id> <seconds>", help = "Sets the expiry time of a plot.\n" + "The <id> argument is the id of the plot to modify.\n" + "The <seconds> argument is how many seconds from the time the command is executed, " + "the plot should expire, considering it is going to expire.\n" + "The -w flag is the world to check for the plot in.", min = 2, max = 2, flags = "w:")
-    @CommandPermissions("pmco.cmd.plot.admin.expiry")
+    @CommandPermissions("pmch.cmd.plot.admin.expiry")
     public void expiry(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
 
         final PlotManager mgr = this.getManager(args, sender, 'w');
@@ -157,7 +157,7 @@ public class PlotAdminCommands {
     }
 
     @Command(aliases = {"owner"}, desc = "Sets the owner of a plot.", usage = "<id> <owner>", help = "Sets the owner of a plot.\n" + "The <id> argument is the id of the plot to modify.\n" + "The <owner> argument is the name of the player you wish to give owner perms for the plot.\n" + "The -w flag is the world to check for the plot in.", min = 2, max = 2, flags = "w:")
-    @CommandPermissions("pmco.cmd.plot.admin.owner")
+    @CommandPermissions("pmch.cmd.plot.admin.owner")
     public void owner(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
 
         final PlotManager mgr = this.getManager(args, sender, 'w');
@@ -173,7 +173,7 @@ public class PlotAdminCommands {
     }
 
     @Command(aliases = {"addplayer", "add"}, desc = "Adds a player to a plot.", usage = "<id> <player>", help = "Adds a player to a plot.\n" + "The <id> argument is the id of the plot to modify.\n" + "The <player> argument is the name of the player you wish to add to the plot.\n" + "The -w flag is the world to check for the plot in.", min = 2, max = 2, flags = "w:")
-    @CommandPermissions("pmco.cmd.plot.admin.addplayer")
+    @CommandPermissions("pmch.cmd.plot.admin.addplayer")
     public void addPlayer(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
 
         final PlotManager mgr = this.getManager(args, sender, 'w');
@@ -190,7 +190,7 @@ public class PlotAdminCommands {
     }
 
     @Command(aliases = {"removeplayer", "rmplayer", "rmp"}, desc = "Removes a player from a plot.", usage = "<id> <player>", help = "Removes a player from a plot.\n" + "The <id> argument is the id of the plot to modify.\n" + "The <player> argument is the name of the player you wish to remove from the plot.\n" + "The -w flag is the world to check for the plot in.", min = 2, max = 2, flags = "w:")
-    @CommandPermissions("pmco.cmd.plot.admin.removeplayer")
+    @CommandPermissions("pmch.cmd.plot.admin.removeplayer")
     public void removePlayer(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
 
         final PlotManager mgr = this.getManager(args, sender, 'w');
@@ -207,7 +207,7 @@ public class PlotAdminCommands {
     }
 
     @Command(aliases = {"update"}, desc = "Updates a plot's sign.", usage = "<id>", help = "Updates a plot's sign.\n" + "The <id> argument is the id of the plot to modify.\n" + "The -w flag is the world to check for the plot in.", min = 1, max = 1, flags = "w:")
-    @CommandPermissions("pmco.cmd.plot.admin.update")
+    @CommandPermissions("pmch.cmd.plot.admin.update")
     public void update(final CommandContext args, final CommandSender sender) throws BungeeCommandException {
 
         final PlotManager mgr = this.getManager(args, sender, 'w');

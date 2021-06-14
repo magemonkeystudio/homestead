@@ -14,9 +14,9 @@ public class GeneralCommands
     {
     }
 
-    @Command(aliases = {"pmco"}, desc = "PlayMCOnline main commands")
+    @Command(aliases = {"pmch"}, desc = "ProMCHousing main commands")
     @NestedCommand(PMCOCommand.class)
-    public void pmco(final CommandContext args, final CommandSender sender)
+    public void pmch(final CommandContext args, final CommandSender sender)
     {
     }
 

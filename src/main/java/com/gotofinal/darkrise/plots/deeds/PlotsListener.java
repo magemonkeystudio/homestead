@@ -180,7 +180,7 @@ public class PlotsListener implements Listener {
 
         final Player player = event.getPlayer();
         final Block block = event.getBlock();
-        if (!event.getBlock().getType().toString().contains("SIGN") || player.hasPermission("pmco.deeds.build")) return;
+        if (!event.getBlock().getType().toString().contains("SIGN") || player.hasPermission("pmch.deeds.build")) return;
 
         final PlotManager mgr = this.plugin.getGlobalPlotsManager().getPlotManager(player.getWorld());
         if (mgr == null) {
