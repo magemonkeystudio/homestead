@@ -19,10 +19,10 @@ import java.util.*;
  */
 public class GlobalPlotsManager {
 
-    private final CustomYaml deedsConfig;
+    private final CustomYaml              deedsConfig;
     private final Map<World, PlotManager> managers = new HashMap<>(5);
-    private final Map<String, Deed> types = new HashMap<>(10);
-    private final DarkRisePlots plugin;
+    private final Map<String, Deed>       types    = new HashMap<>(10);
+    private final DarkRisePlots           plugin;
 
     public GlobalPlotsManager(final DarkRisePlots instance) {
         this.plugin = instance;
@@ -78,8 +78,8 @@ public class GlobalPlotsManager {
         //TODO create a better reloading system where it doesn't clear and it "updates" loaded Deed values
         this.types.clear();
 
-        final FileConfiguration config = this.deedsConfig.getConfig();
-        final ConfigurationSection cs = config.getConfigurationSection("types");
+        final FileConfiguration    config = this.deedsConfig.getConfig();
+        final ConfigurationSection cs     = config.getConfigurationSection("types");
 
         if (cs == null) {
             this.plugin.getLogger().severe("No Plot types found, please define some");
@@ -127,7 +127,8 @@ public class GlobalPlotsManager {
 
         // Get or set the default required values
         type.setDisplayName(ChatColor.translateAlternateColorCodes('&', ConfigUtil.getOrSet(cs, "display-name", typeName)));
-        type.setDescription(cs.getString("description", ""));
+        if (cs.contains("description"))
+            type.setDescription(cs.getStringList("description"));
         type.setFriends(ConfigUtil.getOrSet(cs, "friends", 10));
         type.setTax(ConfigUtil.getOrSet(cs, "tax", 100D));
         type.setDropChance(cs.getDouble("drop-chance", 10D));
@@ -269,8 +270,8 @@ public class GlobalPlotsManager {
     }
 
     public ArrayList<Plot> getAllPlots() {
-        ArrayList<Plot> pts = new ArrayList<>();
-        GlobalPlotsManager pm = DarkRisePlots.getInstance().getGlobalPlotsManager();
+        ArrayList<Plot>    pts = new ArrayList<>();
+        GlobalPlotsManager pm  = DarkRisePlots.getInstance().getGlobalPlotsManager();
 
         for (World w : Bukkit.getWorlds()) {
             if (pm.getPlotManager(w) == null)

@@ -7,24 +7,25 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents a Deed that can be used for Plots.
  */
 public class Deed {
 
-    private final String name;
+    private final String       name;
     //    private final Map<MaterialData, Integer> limitedBlocks = new HashMap<>(20);
-    private String displayName;
-    private String description;
-    private int friends;
-    private double tax;
-    private double dropChance;
-    private int maximumExtensionTime;
-    private int initialExtensionTime;
-    private int extensionTime;
-    private int customData;
+    private       String       displayName;
+    private       List<String> description;
+    private       int          friends;
+    private       double       tax;
+    private       double       dropChance;
+    private       int          maximumExtensionTime;
+    private       int          initialExtensionTime;
+    private       int          extensionTime;
+    private       int          customData;
 
     /**
      * Constructs a new Deed with {@code name} and default values. Please see the setter methods.
@@ -53,10 +54,10 @@ public class Deed {
      */
     public ItemStack toItemStack(final int amount) {
         final ItemStack item = new ItemStack(Material.PAPER, amount);
-        final ItemMeta im = item.getItemMeta();
+        final ItemMeta  im   = item.getItemMeta();
         im.setDisplayName(this.displayName);
-        if ((this.description != null) && !this.description.isEmpty()) {
-            im.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', this.description).split("\\n")));
+        if (this.description != null && !this.description.isEmpty()) {
+            im.setLore(this.description);
         }
 
         if (this.customData != -1) {
@@ -95,12 +96,12 @@ public class Deed {
         this.displayName = displayName;
     }
 
-    public String getDescription() {
+    public List<String> getDescription() {
         return this.description;
     }
 
-    public void setDescription(final String description) {
-        this.description = description;
+    public void setDescription(final List<String> description) {
+        this.description = description.stream().map(str -> ChatColor.translateAlternateColorCodes('&', str)).collect(Collectors.toList());
     }
 
     public int getFriends() {
@@ -278,7 +279,7 @@ public class Deed {
     @Override
     public String toString() {
         return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE).appendSuper(super.toString()).append("name", this.name)
-                /*.append("limitedBlocks", this.limitedBlocks)*/.append("displayName", this.displayName).append("description", this.description)
+                /*.append("limitedBlocks", this.limitedBlocks)*/.append("displayName", this.displayName).append("description", String.join("\n\t", this.description))
                 .append("friends", this.friends).append("tax", this.tax).append("dropChance", this.dropChance)
                 .append("maximumExtensionTime", this.maximumExtensionTime).append("initialExtensionTime", this.initialExtensionTime)
                 .append("extensionTime", this.extensionTime).toString();
