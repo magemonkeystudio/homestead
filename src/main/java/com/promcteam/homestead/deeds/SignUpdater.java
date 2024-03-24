@@ -1,14 +1,15 @@
 package com.promcteam.homestead.deeds;
 
+import com.promcteam.codex.bungee.BungeeUtil;
 import com.promcteam.homestead.Homestead;
 import com.promcteam.homestead.config.ConfigHandler;
-import me.travja.darkrise.core.Core;
-import me.travja.darkrise.core.bungee.BungeeUtil;
-import me.travja.darkrise.core.legacy.util.message.MessageData;
-import me.travja.darkrise.core.legacy.util.message.MessageUtil;
-import me.travja.darkrise.core.util.Utils;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import com.promcteam.risecore.Core;
+import com.promcteam.risecore.legacy.util.message.MessageData;
+import com.promcteam.risecore.legacy.util.message.MessageUtil;
+import com.promcteam.risecore.util.Utils;
+import lombok.Getter;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.BlockState;
@@ -23,26 +24,23 @@ import java.util.*;
  * A {@link org.bukkit.scheduler.BukkitRunnable} that updates plot signs.
  */
 public class SignUpdater implements Listener {
+    @Getter
+    private static final Map<Long, Set<Plot>> unupdated    = new HashMap<>();
+    @Getter
+    private static       long                 interval     = 10L;
+    private static       int                  perTask      = 5;
+    private final        Homestead            plugin;
+    private final        PlotManager          manager;
+    private final        List<String>         sentRecently = new ArrayList<>();
+    @Getter
+    private              BukkitRunnable       task;
 
-    private static       long                     interval  = 10L;
-    private static       int                      perTask   = 5;
-    private final        Homestead                plugin;
-    private final        PlotManager              manager;
-    private              BukkitRunnable           task;
-    private static final HashMap<Long, Set<Plot>> unupdated = new HashMap<>();
-
-    private ArrayList<String> sentRecently = new ArrayList<>();
 
     public SignUpdater(final Homestead instance, final PlotManager manager) {
-
         this.plugin = instance;
         this.manager = manager;
         interval = (long) this.plugin.getConfigHandler().getInt(ConfigHandler.PLOT_SIGN_UPDATE_INTERVAL);
         perTask = this.plugin.getConfigHandler().getInt(ConfigHandler.PLOT_SIGN_UPDATE_PER_TASK);
-    }
-
-    public static HashMap<Long, Set<Plot>> getUnupdated() {
-        return unupdated;
     }
 
     public void update(final Iterator<Plot> plots, final ArrayDeque<Plot> waiting) {
@@ -57,7 +55,7 @@ public class SignUpdater implements Listener {
                 wasWaiting = true;
             }
 
-            final boolean reset       =
+            final boolean reset =
                     (plot.getExpiry() > -1) && (System.currentTimeMillis() >= plot.getFinalExpiry());
             final boolean gracePeriod = plot.getExpiry() > -1 && System.currentTimeMillis() >= plot.getExpiry()
                     && System.currentTimeMillis() < plot.getFinalExpiry();
@@ -91,9 +89,9 @@ public class SignUpdater implements Listener {
             if (location == null) {
                 continue;
             }
-            final long key            =
+            final long key =
                     (((long) (location.getBlockX() >> 4)) << 32) | ((location.getBlockZ() >> 4) & 0xffffffffL);
-            Set<Plot>  unupdatedPlots = unupdated.get(key);
+            Set<Plot> unupdatedPlots = unupdated.get(key);
             if (!location.getChunk().isLoaded() && !wasWaiting) {
                 waiting.add(plot);
                 if (unupdatedPlots == null) {
@@ -207,10 +205,6 @@ public class SignUpdater implements Listener {
         this.active = false;
     }
 
-    public BukkitRunnable getTask() {
-        return this.task;
-    }
-
     /**
      * Checks whether this task is active.
      *
@@ -218,10 +212,6 @@ public class SignUpdater implements Listener {
      */
     public boolean isActive() {
         return this.task != null;
-    }
-
-    public static long getInterval() {
-        return interval;
     }
 
     public static void setInterval(final long interval) {

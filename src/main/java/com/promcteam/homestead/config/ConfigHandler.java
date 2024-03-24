@@ -5,8 +5,8 @@ import java.util.List;
 import com.promcteam.homestead.Homestead;
 import com.promcteam.homestead.events.ConfigReloadEvent;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 

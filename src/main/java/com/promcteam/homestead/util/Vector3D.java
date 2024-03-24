@@ -90,7 +90,9 @@ public class Vector3D {
     /**
      * Adds the current vector and a given vector together, producing a result vector.
      *
-     * @param other - the other vector.
+     * @param x - the x coordinate.
+     * @param y - the y coordinate.
+     * @param z - the z coordinate.
      * @return The new result vector.
      */
     public Vector3D add(final double x, final double y, final double z) {
@@ -98,7 +100,7 @@ public class Vector3D {
     }
 
     /**
-     * Substracts the current vector and a given vector, producing a result position.
+     * Subtracts the current vector and a given vector, producing a result position.
      *
      * @param other - the other position.
      * @return The new result position.
@@ -111,9 +113,11 @@ public class Vector3D {
     }
 
     /**
-     * Substracts the current vector and a given vector together, producing a result vector.
+     * Subtracts the current vector and a given vector together, producing a result vector.
      *
-     * @param other - the other vector.
+     * @param x - the x coordinate.
+     * @param y - the y coordinate.
+     * @param z - the z coordinate.
      * @return The new result vector.
      */
     public Vector3D subtract(final double x, final double y, final double z) {

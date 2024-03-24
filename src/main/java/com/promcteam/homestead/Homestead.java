@@ -1,5 +1,6 @@
 package com.promcteam.homestead;
 
+import com.promcteam.codex.bungee.BungeeUtil;
 import com.promcteam.homestead.commands.GeneralCommands;
 import com.promcteam.homestead.config.ConfigHandler;
 import com.promcteam.homestead.deeds.Deed;
@@ -8,15 +9,14 @@ import com.promcteam.homestead.deeds.Plot;
 import com.promcteam.homestead.deeds.PlotManager;
 import com.promcteam.homestead.util.bungee.BungeeListener;
 import com.promcteam.homestead.util.bungee.JoinListener;
+import com.promcteam.risecore.ConfigManager;
+import com.promcteam.risecore.legacy.chat.placeholder.PlaceholderType;
+import com.promcteam.risecore.legacy.util.Init;
+import com.promcteam.risecore.legacy.util.message.MessageUtil;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.*;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import lombok.Getter;
-import me.travja.darkrise.core.ConfigManager;
-import me.travja.darkrise.core.bungee.BungeeUtil;
-import me.travja.darkrise.core.legacy.killme.chat.placeholder.PlaceholderType;
-import me.travja.darkrise.core.legacy.util.Init;
-import me.travja.darkrise.core.legacy.util.message.MessageUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

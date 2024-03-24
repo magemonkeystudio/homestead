@@ -1,14 +1,9 @@
 package com.promcteam.homestead.util;
 
-
-import me.travja.darkrise.core.legacy.util.Vault;
+import com.promcteam.codex.CodexEngine;
 import org.bukkit.ChatColor;
 
 public final class Util {
-
-    private Util() {
-    }
-
     /**
      * Gets the message for deduction from balance.
      *
@@ -16,7 +11,9 @@ public final class Util {
      * @return the message
      */
     public static String getDeductedMessage(final double amount) {
-        return String.format("%s%s deducted from your balance.", ChatColor.YELLOW, Vault.format(amount));
+        return String.format("%s%s deducted from your balance.",
+                ChatColor.YELLOW,
+                CodexEngine.get().getVault().format(amount));
     }
 
     /**
@@ -26,6 +23,8 @@ public final class Util {
      * @return the message
      */
     public static String getAddedMessage(final double amount) {
-        return String.format("%s%s added to your balance.", ChatColor.YELLOW, Vault.format(amount));
+        return String.format("%s%s added to your balance.",
+                ChatColor.YELLOW,
+                CodexEngine.get().getVault().format(amount));
     }
 }

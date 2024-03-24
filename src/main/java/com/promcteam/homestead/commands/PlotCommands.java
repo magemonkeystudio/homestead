@@ -1,5 +1,6 @@
 package com.promcteam.homestead.commands;
 
+import com.promcteam.codex.CodexEngine;
 import com.promcteam.homestead.Homestead;
 import com.promcteam.homestead.config.ConfigHandler;
 import com.promcteam.homestead.deeds.Plot;
@@ -12,11 +13,10 @@ import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.CommandPermissions;
 import com.sk89q.minecraft.util.commands.NestedCommand;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.travja.darkrise.core.legacy.util.Vault;
-import me.travja.darkrise.core.legacy.util.message.MessageData;
-import me.travja.darkrise.core.legacy.util.message.MessageUtil;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import com.promcteam.risecore.legacy.util.message.MessageData;
+import com.promcteam.risecore.legacy.util.message.MessageUtil;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -306,10 +306,10 @@ public class PlotCommands {
             if (price < 0) {
                 throw new BungeeCommandException("Price must be 0 or higher.");
             }
-            if (!Vault.canPay(buyer, price)) {
+            if (!CodexEngine.get().getVault().canPay(buyer, price)) {
                 throw new BungeeCommandException("That player can not afford your deal.");
             }
-            sb.append((price > 0) ? Vault.format(price) : "free");
+            sb.append((price > 0) ? CodexEngine.get().getVault().format(price) : "free");
         } else {
             sb.append("free");
         }
@@ -358,14 +358,14 @@ public class PlotCommands {
         final Plot   plot      = plotPurchase.getPlot();
         final String plotOwner = plot.getOwner();
         final double price     = plotPurchase.getPrice();
-        if (!Vault.canPay(player, price)) {
+        if (!CodexEngine.get().getVault().canPay(player, price)) {
             throw new BungeeCommandException("You can not afford to purchase this plot.");
         }
 
-        Vault.pay(player, price);
+        CodexEngine.get().getVault().take(player, price);
         player.sendMessage(Util.getDeductedMessage(price));
 
-        Vault.addMoney(Bukkit.getOfflinePlayer(plotOwner), price);
+        CodexEngine.get().getVault().give(Bukkit.getOfflinePlayer(plotOwner), price);
         final Player plotOwnerPlayer = Bukkit.getPlayer(plotOwner);
         if (plotOwnerPlayer != null) {
             plotOwnerPlayer.sendMessage(Util.getAddedMessage(price));

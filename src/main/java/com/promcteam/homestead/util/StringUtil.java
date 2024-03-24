@@ -1,18 +1,14 @@
 package com.promcteam.homestead.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang.StringUtils;
 
 /**
  * Contains String utility methods such as wrapping String.
  */
 public final class StringUtil {
-
-    private StringUtil() {
-    }
-
     public static String join(List<String> list, String s) {
         String ret = "";
         if (list == null || list.isEmpty())

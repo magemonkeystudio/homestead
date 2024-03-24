@@ -18,11 +18,11 @@
 
 package com.promcteam.homestead.util.pagination;
 
-import com.promcteam.homestead.util.bungee.BungeeCommandException;
 import com.promcteam.homestead.bungee.util.CordUtil;
+import com.promcteam.homestead.util.bungee.BungeeCommandException;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;

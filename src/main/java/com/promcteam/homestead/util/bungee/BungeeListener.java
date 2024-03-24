@@ -2,15 +2,15 @@ package com.promcteam.homestead.util.bungee;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
+import com.promcteam.codex.bungee.BungeeUtil;
 import com.promcteam.homestead.Homestead;
 import com.promcteam.homestead.commands.PlotCommands;
 import com.promcteam.homestead.config.ConfigHandler;
 import com.promcteam.homestead.deeds.GlobalPlotsManager;
 import com.promcteam.homestead.deeds.Plot;
+import com.promcteam.risecore.legacy.util.message.MessageData;
+import com.promcteam.risecore.legacy.util.message.MessageUtil;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.travja.darkrise.core.bungee.BungeeUtil;
-import me.travja.darkrise.core.legacy.util.message.MessageData;
-import me.travja.darkrise.core.legacy.util.message.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -153,10 +153,10 @@ public class BungeeListener implements PluginMessageListener {
         if (!channel.equals(BungeeUtil.CHANNEL))
             return;
 
-        ByteArrayDataInput in     = ByteStreams.newDataInput(message);
-        UUID               id     =
+        ByteArrayDataInput in = ByteStreams.newDataInput(message);
+        UUID id =
                 UUID.fromString(in.readUTF()); // We really don't need to do anything with this, aside from sending a response.
-        String             sender = in.readUTF();
+        String sender = in.readUTF();
         BungeeUtil.sendResponse(id, "PlotsReceived");
         String one = in.readUTF();
         if (handlers.containsKey(one)) {

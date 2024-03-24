@@ -1,5 +1,7 @@
 package com.promcteam.homestead.deeds;
 
+import com.promcteam.codex.CodexEngine;
+import com.promcteam.codex.bungee.BungeeUtil;
 import com.promcteam.homestead.Homestead;
 import com.promcteam.homestead.commands.PlotCommands;
 import com.promcteam.homestead.config.ConfigHandler;
@@ -8,10 +10,8 @@ import com.promcteam.homestead.events.PlotUpdateEvent;
 import com.promcteam.homestead.util.Util;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import me.travja.darkrise.core.bungee.BungeeUtil;
-import me.travja.darkrise.core.legacy.util.Vault;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
@@ -140,7 +140,7 @@ public class PlotsListener implements Listener {
                             }
 
                             final double tax = plot.getDeed().getTax();
-                            Vault.pay(player, tax);
+                            CodexEngine.get().getVault().take(player, tax);
                             player.sendMessage(Util.getDeductedMessage(tax));
 
                             plot.extendExpiry();
@@ -395,7 +395,7 @@ public class PlotsListener implements Listener {
         if (!this.canAffordPlot(player, plot)) {
             return;
         }
-        Vault.pay(player, tax);
+        CodexEngine.get().getVault().take(player, tax);
         player.sendMessage(Util.getDeductedMessage(tax));
         if (item.getAmount() <= 1) {
             player.getInventory().remove(item);
@@ -418,7 +418,7 @@ public class PlotsListener implements Listener {
 
     public boolean canAffordPlot(final Player player, final Plot plot) {
         final double tax = plot.getDeed().getTax();
-        if (!Vault.canPay(player, tax)) {
+        if (!CodexEngine.get().getVault().canPay(player, tax)) {
             if (player.getName().equalsIgnoreCase(plot.getOwner())) {
                 player.sendMessage(ChatColor.RED + "You can not afford rent for this plot.");
             } else {

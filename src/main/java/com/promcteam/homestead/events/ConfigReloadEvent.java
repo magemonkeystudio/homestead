@@ -1,8 +1,8 @@
 package com.promcteam.homestead.events;
 
 import com.promcteam.homestead.config.ConfigHandler;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 

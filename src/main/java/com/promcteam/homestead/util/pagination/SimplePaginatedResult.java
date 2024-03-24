@@ -1,8 +1,8 @@
 package com.promcteam.homestead.util.pagination;
 
 import net.md_5.bungee.api.ChatColor;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * An abstract class for paginating a Collection.
