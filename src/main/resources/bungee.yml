@@ -1,7 +1,7 @@
-name: ProMCHousing-Bungee
+name: ${project.name}-Bungee
 author: Travja
-version: 1.0-SNAPSHOT
-main: me.travja.darkrise.plots.bungee.Bridge
+version: ${project.version}
+main: com.promcteam.homestead.bungee.Bridge
 commands:
 #  house:
 #  deed:

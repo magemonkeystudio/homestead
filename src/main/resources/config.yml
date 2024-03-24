@@ -1,18 +1,18 @@
 deeds:
-    deed-sign-interaction-cooldown: 1000
-    deed-sign-confirmation: 30
+  deed-sign-interaction-cooldown: 1000
+  deed-sign-confirmation: 30
 random-chests:
-    style: DROP_OFF
-    generate-new-upon-open: true
-    creation-sound: true
-    open-sound: true
-    FIREWORKS: true
+  style: DROP_OFF
+  generate-new-upon-open: true
+  creation-sound: true
+  open-sound: true
+  FIREWORKS: true
 plots:
-    sell:
-        distance: 8
-    expiry:
-        grace_period: 48
-        warn_interval: 30
+  sell:
+    distance: 8
+  expiry:
+    grace_period: 48
+    warn_interval: 30
 home-cooldown: 10
 home-warmup: 5
 bungee: true
