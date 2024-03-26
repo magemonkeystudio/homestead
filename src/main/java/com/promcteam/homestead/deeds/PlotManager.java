@@ -147,7 +147,7 @@ public class PlotManager {
         final String typeName = ConfigUtil.getOrSet(temp,
                 "type",
                 this.plugin.getGlobalPlotsManager().getTypes().keySet().iterator().next());
-        final Deed   type     = this.plugin.getGlobalPlotsManager().getDeedType(typeName);
+        final Deed type = this.plugin.getGlobalPlotsManager().getDeedType(typeName);
         if (type == null) {
             this.plugin.getLogger().severe("Plot '" + name + "' has an invalid type called '" + typeName + "'.");
             return null;

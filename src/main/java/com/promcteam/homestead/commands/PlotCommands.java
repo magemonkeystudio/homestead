@@ -1,6 +1,8 @@
 package com.promcteam.homestead.commands;
 
 import com.promcteam.codex.CodexEngine;
+import com.promcteam.codex.util.messages.MessageData;
+import com.promcteam.codex.util.messages.MessageUtil;
 import com.promcteam.homestead.Homestead;
 import com.promcteam.homestead.config.ConfigHandler;
 import com.promcteam.homestead.deeds.Plot;
@@ -13,8 +15,6 @@ import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.CommandPermissions;
 import com.sk89q.minecraft.util.commands.NestedCommand;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
-import com.promcteam.risecore.legacy.util.message.MessageData;
-import com.promcteam.risecore.legacy.util.message.MessageUtil;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.Bukkit;
@@ -417,9 +417,9 @@ public class PlotCommands {
 
             @Override
             public String format(final Plot entry, final int index) {
-                String         result =
+                String result =
                         ChatColor.YELLOW.toString() + (index + 1) + ". " + ChatColor.BOLD + entry.getName();
-                final Location loc    = entry.getSignLocation();
+                final Location loc = entry.getSignLocation();
                 if (loc != null) {
                     result =
                             result + ChatColor.AQUA + " - x: " + loc.getBlockX() + ", " + "y: " + loc.getBlockY() + ", "

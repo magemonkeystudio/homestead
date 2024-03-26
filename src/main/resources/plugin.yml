@@ -1,7 +1,7 @@
 name: ${project.name}
 main: com.promcteam.homestead.Homestead
 version: ${project.version}
-depend: [ RiseCore, Sapphire, WorldGuard, Vault ]
+depend: [ Codex, Sapphire, WorldGuard, Vault ]
 authors: [ Travja, GotoFinal ]
 api-version: 1.13
 

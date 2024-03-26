@@ -1,12 +1,12 @@
 package com.promcteam.homestead.config;
 
-import java.io.File;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
+
+import java.io.File;
 
 /**
  * Represents a custom configurable yaml file.

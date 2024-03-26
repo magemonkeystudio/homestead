@@ -4,7 +4,6 @@ import com.promcteam.homestead.Homestead;
 import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.NestedCommand;
-
 import org.bukkit.command.CommandSender;
 
 public class GeneralCommands {

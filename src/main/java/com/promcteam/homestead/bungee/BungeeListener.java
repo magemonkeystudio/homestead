@@ -36,7 +36,7 @@ public class BungeeListener implements Listener {
         Configuration cache  = config.getSection("cache");
         for (String key : cache.getKeys()) {
             Configuration section = cache.getSection(key);
-            MessageData   data    =
+            MessageData data =
                     new MessageData(section.getString("server"), section.getStringList("data").toArray(new String[0]));
             cached.put(key, data);
 
@@ -97,9 +97,9 @@ public class BungeeListener implements Listener {
                 ServerInfo destServer = Bridge.getInstance().getProxy().getServerInfo(serverStr);
                 if (!serverStr.equals(server)) {
                     if (serverStr.equals("notFound") || destServer == null) {
-                        MessageData msg  =
+                        MessageData msg =
                                 new MessageData("Bungee", "PlotMessage", receiver.toString(), "Home was not found.");
-                        ServerInfo  info = Bridge.getInstance().getProxy().getServerInfo(server);
+                        ServerInfo info = Bridge.getInstance().getProxy().getServerInfo(server);
                         info.sendData(Bridge.CHANNEL, msg.toByteArray(), true);
                         return;
                     }

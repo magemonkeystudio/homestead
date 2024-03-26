@@ -1,10 +1,10 @@
 package com.promcteam.homestead.util.bungee;
 
+import com.promcteam.codex.util.messages.MessageData;
+import com.promcteam.codex.util.messages.MessageUtil;
 import com.promcteam.homestead.Homestead;
 import com.promcteam.homestead.deeds.GlobalPlotsManager;
 import com.promcteam.homestead.deeds.Plot;
-import com.promcteam.risecore.legacy.util.message.MessageData;
-import com.promcteam.risecore.legacy.util.message.MessageUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;

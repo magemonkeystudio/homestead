@@ -1,12 +1,12 @@
 package com.promcteam.homestead.deeds;
 
+import com.promcteam.codex.CodexEngine;
 import com.promcteam.codex.bungee.BungeeUtil;
+import com.promcteam.codex.legacy.utils.Utils;
+import com.promcteam.codex.util.messages.MessageData;
+import com.promcteam.codex.util.messages.MessageUtil;
 import com.promcteam.homestead.Homestead;
 import com.promcteam.homestead.config.ConfigHandler;
-import com.promcteam.risecore.Core;
-import com.promcteam.risecore.legacy.util.message.MessageData;
-import com.promcteam.risecore.legacy.util.message.MessageUtil;
-import com.promcteam.risecore.util.Utils;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -66,7 +66,7 @@ public class SignUpdater implements Listener {
                             new MessageData("plotname", plot.getName()),
                             new MessageData("time",
                                     Utils.getFriendlyTime(plot.getFinalExpiry() - System.currentTimeMillis())));
-                    if (Core.IS_BUNGEE) {
+                    if (CodexEngine.IS_BUNGEE) {
                         BungeeUtil.sendPlayerMessage(own, message);
                         sentRecently.add(own);
                     } else {

@@ -1,6 +1,10 @@
 package com.promcteam.homestead;
 
 import com.promcteam.codex.bungee.BungeeUtil;
+import com.promcteam.codex.config.legacy.LegacyConfigManager;
+import com.promcteam.codex.legacy.placeholder.PlaceholderRegistry;
+import com.promcteam.codex.legacy.placeholder.PlaceholderType;
+import com.promcteam.codex.util.messages.MessageUtil;
 import com.promcteam.homestead.commands.GeneralCommands;
 import com.promcteam.homestead.config.ConfigHandler;
 import com.promcteam.homestead.deeds.Deed;
@@ -9,10 +13,6 @@ import com.promcteam.homestead.deeds.Plot;
 import com.promcteam.homestead.deeds.PlotManager;
 import com.promcteam.homestead.util.bungee.BungeeListener;
 import com.promcteam.homestead.util.bungee.JoinListener;
-import com.promcteam.risecore.ConfigManager;
-import com.promcteam.risecore.legacy.chat.placeholder.PlaceholderType;
-import com.promcteam.risecore.legacy.util.Init;
-import com.promcteam.risecore.legacy.util.message.MessageUtil;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.*;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
@@ -103,11 +103,11 @@ public class Homestead extends JavaPlugin {
 
         PROTECTED_REGION.registerChild("parent", PROTECTED_REGION, ProtectedRegion::getParent);
         PLOT.registerChild("region", PROTECTED_REGION, Plot::getProtectedRegion);
-        PLOT.registerChild("home", Init.LOCATION, Plot::getHome);
-        PLOT.registerChild("sign", Init.LOCATION, Plot::getSignLocation);
+        PLOT.registerChild("home", PlaceholderRegistry.LOCATION, Plot::getHome);
+        PLOT.registerChild("sign", PlaceholderRegistry.LOCATION, Plot::getSignLocation);
         PLOT.registerChild("region", DEED, Plot::getDeed);
         FileConfiguration lang =
-                ConfigManager.loadConfigFile(new File(getDataFolder() + File.separator + "lang", "lang_en.yml"),
+                LegacyConfigManager.loadConfigFile(new File(getDataFolder() + File.separator + "lang", "lang_en.yml"),
                         getResource("lang/lang_en.yml"));
         MessageUtil.load(lang, this);
         super.onLoad();
