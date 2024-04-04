@@ -1,7 +1,7 @@
 name: ${project.name}-Bungee
 author: Travja
 version: ${project.version}
-main: com.promcteam.homestead.bungee.Bridge
+main: studio.magemonkey.homestead.bungee.Bridge
 commands:
 #  house:
 #  deed:

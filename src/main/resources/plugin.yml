@@ -1,5 +1,5 @@
 name: ${project.name}
-main: com.promcteam.homestead.Homestead
+main: studio.magemonkey.homestead.Homestead
 version: ${project.version}
 depend: [ Codex, Sapphire, WorldGuard, Vault ]
 authors: [ Travja, GotoFinal ]
