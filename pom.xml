@@ -13,10 +13,6 @@
     <name>Homestead</name>
     <version>1.0.0-R0.2-SNAPSHOT</version>
 
-    <build>
-        <finalName>${project.artifactId}-${project.version}</finalName>
-    </build>
-
     <dependencies>
         <dependency>
             <groupId>studio.magemonkey</groupId>
