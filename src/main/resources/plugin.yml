@@ -1,8 +1,8 @@
-name: ProMCHousing
-main: com.gotofinal.darkrise.plots.DarkRisePlots
+name: ${project.name}
+main: studio.magemonkey.homestead.Homestead
 version: ${project.version}
-depend: [RiseCore, ProMCUtilities, WorldGuard, Vault]
-authors: [Travja, GotoFinal]
+depend: [ Codex, Sapphire, WorldGuard, Vault ]
+authors: [ Travja, GotoFinal ]
 api-version: 1.13
 
 commands:

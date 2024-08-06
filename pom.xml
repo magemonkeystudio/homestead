@@ -3,31 +3,35 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>risecore-parent</artifactId>
-        <groupId>me.travja</groupId>
-        <version>1.0.1-SNAPSHOT</version>
+        <groupId>studio.magemonkey</groupId>
+        <artifactId>magemonkey-parent</artifactId>
+        <version>1.21-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>plots</artifactId>
-    <name>ProMCHousing</name>
-    <version>1.0-SNAPSHOT</version>
-
-    <build>
-        <finalName>${project.name}-${project.version}-${maven.build.timestamp}</finalName>
-    </build>
+    <artifactId>homestead</artifactId>
+    <name>Homestead</name>
+    <version>1.0.0-R0.2-SNAPSHOT</version>
 
     <dependencies>
         <dependency>
-            <groupId>me.travja</groupId>
-            <artifactId>risecore</artifactId>
-            <version>${rc.version}</version>
+            <groupId>studio.magemonkey</groupId>
+            <artifactId>codex</artifactId>
         </dependency>
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-api</artifactId>
-            <version>1.16-R0.4</version>
-            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sk89q.worldguard</groupId>
+            <artifactId>worldguard-bukkit</artifactId>
         </dependency>
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>sonatype</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
+    </repositories>
 </project>
