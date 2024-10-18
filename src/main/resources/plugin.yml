@@ -1,7 +1,7 @@
 name: ${project.name}
 main: studio.magemonkey.homestead.Homestead
 version: ${project.version}
-depend: [ Codex, Sapphire, WorldGuard, Vault ]
+depend: [ CodexCore, Sapphire, WorldGuard, Vault ]
 authors: [ Travja, GotoFinal ]
 api-version: 1.13
 
