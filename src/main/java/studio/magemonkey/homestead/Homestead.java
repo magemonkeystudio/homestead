@@ -48,10 +48,6 @@ public class Homestead extends JavaPlugin {
         registration.register(GeneralCommands.class);
     }
 
-    {
-        instance = this;
-    }
-
     public Plot getPlot(final Player player) {
         final PlotManager mgr = getGlobalPlotsManager().getPlotManager(player.getWorld());
         if (mgr == null) {
@@ -77,6 +73,7 @@ public class Homestead extends JavaPlugin {
 
     @Override
     public void onLoad() {
+        instance = this;
         reloadConfig();
         this.getServer().getMessenger().registerIncomingPluginChannel(this, BungeeUtil.CHANNEL, new BungeeListener());
         PROTECTED_REGION.registerItem("id", ProtectedRegion::getId);
