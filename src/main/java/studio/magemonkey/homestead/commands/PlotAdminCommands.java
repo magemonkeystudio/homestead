@@ -129,6 +129,7 @@ public class PlotAdminCommands {
         }
 
         plot.setSignLocation(block.getLocation());
+        this.plugin.getGlobalPlotsManager().saveAll();
         sender.sendMessage(ChatColor.YELLOW + "You successfully set the sign location for plot '" + id + "'.");
     }
 

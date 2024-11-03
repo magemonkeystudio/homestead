@@ -45,31 +45,6 @@ public abstract class PaginatedResult<T> {
         this.resultsPerPage = resultsPerPage;
     }
 
-    public void display(ProxiedPlayer sender, Collection<? extends T> results, int page) throws BungeeCommandException {
-        display(sender, new ArrayList<>(results), page);
-    }
-
-    public void display(ProxiedPlayer sender, final List<? extends T> results, final int page) throws
-            BungeeCommandException {
-        if (results.isEmpty()) {
-            throw new BungeeCommandException("No results match!");
-        }
-
-        final int maxPages = (results.size() / this.resultsPerPage) + 1;
-        if ((page <= 0) || (page > maxPages)) {
-            throw new BungeeCommandException("Unknown page selected! " + maxPages + " total pages.");
-        }
-
-        String message = this.formatHeader(page, maxPages);
-
-        for (int i = this.resultsPerPage * (page - 1);
-             (i < (this.resultsPerPage * page)) && (i < results.size());
-             i++) {
-            message += "\n" + this.format(results.get(i), i);
-        }
-        CordUtil.sendMessage(sender, message);
-    }
-
     public void display(final CommandSender sender, final Collection<? extends T> results, final int page) throws
             BungeeCommandException {
         this.display(sender, new ArrayList<>(results), page);
@@ -78,7 +53,8 @@ public abstract class PaginatedResult<T> {
     public void display(final CommandSender sender, final List<? extends T> results, final int page) throws
             BungeeCommandException {
         if (results.isEmpty()) {
-            throw new BungeeCommandException("No results match!");
+            sender.sendMessage("No results found.");
+            return;
         }
 
         final int maxPages = (results.size() / this.resultsPerPage) + 1;

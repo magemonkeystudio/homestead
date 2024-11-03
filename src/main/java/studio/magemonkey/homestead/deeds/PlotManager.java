@@ -1,8 +1,5 @@
 package studio.magemonkey.homestead.deeds;
 
-import studio.magemonkey.homestead.Homestead;
-import studio.magemonkey.homestead.util.ConfigUtil;
-import studio.magemonkey.homestead.util.Serialization;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.managers.RegionManager;
@@ -13,6 +10,9 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import studio.magemonkey.homestead.Homestead;
+import studio.magemonkey.homestead.util.ConfigUtil;
+import studio.magemonkey.homestead.util.Serialization;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -94,8 +94,8 @@ public class PlotManager {
      * Saves all the {@link Plot}s safely.
      */
     public void saveAll() {
-
-        final ConfigurationSection cs = this.config.getConfigurationSection("plots." + this.world.getName());
+        this.config.set("plots." + this.world.getName(), null);
+        final ConfigurationSection cs = this.config.createSection("plots." + this.world.getName());
         for (final Plot plot : this.plots.values()) {
             this.save(cs, plot);
         }
@@ -199,7 +199,6 @@ public class PlotManager {
      * @param plot plot to save
      */
     public void save(final ConfigurationSection cs, final Plot plot) {
-
         if ((cs == null) || (plot == null)) {
             throw new IllegalArgumentException("cs and plot can not be null.");
         }
@@ -280,6 +279,7 @@ public class PlotManager {
             throw new IllegalArgumentException("plot can not be null.");
         }
         this.plots.put(plot.getName().toLowerCase(), plot);
+        this.plugin.getGlobalPlotsManager().saveAll();
     }
 
     /**
@@ -304,7 +304,9 @@ public class PlotManager {
      * @return the removed Plot, otherwise null if no deed was found
      */
     public boolean removePlot(final String plot) {
-        return this.plots.remove(plot.toLowerCase()) != null;
+        boolean removed = this.plots.remove(plot.toLowerCase()) != null;
+        this.plugin.getGlobalPlotsManager().saveAll();
+        return removed;
     }
 
     public RegionManager getRegionManager() {

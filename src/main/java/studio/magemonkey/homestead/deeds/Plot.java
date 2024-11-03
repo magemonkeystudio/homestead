@@ -1,10 +1,5 @@
 package studio.magemonkey.homestead.deeds;
 
-import studio.magemonkey.homestead.Homestead;
-import studio.magemonkey.homestead.config.ConfigHandler;
-import studio.magemonkey.homestead.events.PlotUpdateEvent;
-import studio.magemonkey.homestead.util.StringUtil;
-import studio.magemonkey.homestead.util.TimeUtil;
 import com.sk89q.worldedit.bukkit.BukkitAdapter;
 import com.sk89q.worldguard.WorldGuard;
 import com.sk89q.worldguard.protection.managers.RegionManager;
@@ -20,6 +15,11 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.Sign;
 import org.bukkit.block.data.Directional;
 import org.bukkit.entity.Player;
+import studio.magemonkey.homestead.Homestead;
+import studio.magemonkey.homestead.config.ConfigHandler;
+import studio.magemonkey.homestead.events.PlotUpdateEvent;
+import studio.magemonkey.homestead.util.StringUtil;
+import studio.magemonkey.homestead.util.TimeUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +43,7 @@ public class Plot {
     }
 
     public Location getHome() {
-        if (this.home == null) {
+        if (this.home == null && this.signLocation != null) {
             this.home = this.signLocation.clone().add(1, 0, 0);
         }
         return this.home;

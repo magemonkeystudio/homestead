@@ -1,11 +1,5 @@
 package studio.magemonkey.homestead.bungee;
 
-import studio.magemonkey.homestead.bungee.util.CordUtil;
-import studio.magemonkey.homestead.bungee.util.DataUtil;
-import studio.magemonkey.homestead.commands.PlotCommands;
-import studio.magemonkey.homestead.util.StringUtil;
-import studio.magemonkey.homestead.util.bungee.BungeeCommandException;
-import studio.magemonkey.homestead.util.pagination.SimplePaginatedResult;
 import com.sk89q.minecraft.util.commands.CommandPermissions;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -15,6 +9,12 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import studio.magemonkey.homestead.bungee.util.CordUtil;
+import studio.magemonkey.homestead.bungee.util.DataUtil;
+import studio.magemonkey.homestead.commands.PlotCommands;
+import studio.magemonkey.homestead.util.StringUtil;
+import studio.magemonkey.homestead.util.bungee.BungeeCommandException;
+import studio.magemonkey.homestead.util.bungee.BungeeSimplePaginatedResult;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -307,8 +307,7 @@ public class BungeePlotCommands extends Command {
             }
         }
 
-        new SimplePaginatedResult<ProxyPlot>("Plots in '" + server + "'") {
-
+        new BungeeSimplePaginatedResult<ProxyPlot>("Plots in '" + server + "'") {
             @Override
             public String format(final ProxyPlot entry, final int index) {
                 String result = ChatColor.YELLOW.toString() + (index + 1) + ". " + ChatColor.BOLD + entry.getName();
