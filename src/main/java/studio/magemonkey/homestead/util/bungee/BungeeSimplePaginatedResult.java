@@ -24,7 +24,7 @@ import java.util.List;
  * </pre>
  * <p>
  * If the Collection was bigger than the resultsPerPage variable, which is specified in the
- * {@link #SimplePaginatedResult(String, int)} constructor then the maxPages variable in
+ * {@link #BungeeSimplePaginatedResult(String, int)} constructor then the maxPages variable in
  * {@link #formatHeader(int, int)} would return the maximum amount of pages, which is simple math:
  * {@code collection size / resultsPerPage}.
  *
