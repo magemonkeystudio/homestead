@@ -1,13 +1,5 @@
 package studio.magemonkey.homestead.deeds;
 
-import studio.magemonkey.codex.CodexEngine;
-import studio.magemonkey.codex.bungee.BungeeUtil;
-import studio.magemonkey.homestead.Homestead;
-import studio.magemonkey.homestead.commands.PlotCommands;
-import studio.magemonkey.homestead.config.ConfigHandler;
-import studio.magemonkey.homestead.events.ConfigReloadEvent;
-import studio.magemonkey.homestead.events.PlotUpdateEvent;
-import studio.magemonkey.homestead.util.Util;
 import com.sk89q.worldedit.math.BlockVector3;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -31,6 +23,14 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 import org.bukkit.scheduler.BukkitRunnable;
+import studio.magemonkey.codex.CodexEngine;
+import studio.magemonkey.codex.bungee.BungeeUtil;
+import studio.magemonkey.homestead.Homestead;
+import studio.magemonkey.homestead.commands.PlotCommands;
+import studio.magemonkey.homestead.config.ConfigHandler;
+import studio.magemonkey.homestead.events.ConfigReloadEvent;
+import studio.magemonkey.homestead.events.PlotUpdateEvent;
+import studio.magemonkey.homestead.util.Util;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -95,10 +95,6 @@ public class PlotsListener implements Listener {
 
         final Player player = event.getPlayer();
 
-        if (this.isOnCooldown(player)) {
-            return;
-        }
-
         final PlotManager mgr = this.plugin.getGlobalPlotsManager().getPlotManager(player.getWorld());
         if (mgr == null) {
             return;
@@ -110,7 +106,13 @@ public class PlotsListener implements Listener {
             return;
         }
 
+        if (this.isOnCooldown(player)) {
+            if (event.getAction() == Action.RIGHT_CLICK_BLOCK) event.setCancelled(true);
+            return;
+        }
+
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            event.setCancelled(true);
             final ItemStack item = event.getItem();
 
             // If the player is already confirming a purchase, then no need to go on
@@ -149,7 +151,6 @@ public class PlotsListener implements Listener {
                     }
                 }
             } else { // Purchasing
-
                 final Plot ownedPlot = this.getPlot(player);
                 if (ownedPlot != null) {
                     player.sendMessage(ChatColor.RED + "You already own a plot called '" + ownedPlot.getName() + "'.");
@@ -331,11 +332,11 @@ public class PlotsListener implements Listener {
 
     public Plot getPlotFromSign(final PlotManager manager, final Player player, final Sign sign) {
 
-        // Lets check the clicked sign for the plot name first instead of loop through all deeds
+        // Let's check the clicked sign for the plot name first instead of loop through all deeds
         Plot plot = manager.getPlot(sign.getLine(0));
 
         if ((plot == null) || !sign.getLocation().equals(plot.getSignLocation())) {
-            // Lets check if the player is confirming and get that deed
+            // Let's check if the player is confirming and get that deed
             if ((player != null) && this.isConfirming(player)) {
                 plot = this.getConfirmingPlot(player);
             }
