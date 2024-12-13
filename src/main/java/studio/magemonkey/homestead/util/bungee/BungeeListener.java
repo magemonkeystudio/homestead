@@ -2,14 +2,6 @@ package studio.magemonkey.homestead.util.bungee;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteStreams;
-import studio.magemonkey.codex.bungee.BungeeUtil;
-import studio.magemonkey.codex.util.messages.MessageData;
-import studio.magemonkey.codex.util.messages.MessageUtil;
-import studio.magemonkey.homestead.Homestead;
-import studio.magemonkey.homestead.commands.PlotCommands;
-import studio.magemonkey.homestead.config.ConfigHandler;
-import studio.magemonkey.homestead.deeds.GlobalPlotsManager;
-import studio.magemonkey.homestead.deeds.Plot;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,6 +9,14 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
+import studio.magemonkey.codex.CodexEngine;
+import studio.magemonkey.codex.bungee.BungeeUtil;
+import studio.magemonkey.codex.util.messages.MessageData;
+import studio.magemonkey.homestead.Homestead;
+import studio.magemonkey.homestead.commands.PlotCommands;
+import studio.magemonkey.homestead.config.ConfigHandler;
+import studio.magemonkey.homestead.deeds.GlobalPlotsManager;
+import studio.magemonkey.homestead.deeds.Plot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,12 +44,12 @@ public class BungeeListener implements PluginMessageListener {
 
                 OfflinePlayer targetPlayer = Bukkit.getPlayer(plot.getOwner());
                 if (plot.getOwner().equalsIgnoreCase(player.getName())) {
-                    MessageUtil.sendMessage("plots.commands.plot.home.own",
+                    CodexEngine.get().getMessageUtil().sendMessage("plots.commands.plot.home.own",
                             player,
                             new MessageData("player", player),
                             new MessageData("plot", plot));
                 } else {
-                    MessageUtil.sendMessage("plots.commands.plot.home.other",
+                    CodexEngine.get().getMessageUtil().sendMessage("plots.commands.plot.home.other",
                             player,
                             new MessageData("player", player),
                             new MessageData("target", targetPlayer),
@@ -96,7 +96,7 @@ public class BungeeListener implements PluginMessageListener {
                 } finally {
                     replacements.add(new MessageData("sellDistance", Homestead.getInstance().getConfigHandler().getInt(
                             ConfigHandler.SELL_DISTANCE)));
-                    MessageUtil.sendMessage(message.substring(1), player,
+                    CodexEngine.get().getMessageUtil().sendMessage(message.substring(1), player,
                             replacements.toArray(new MessageData[0]));
                 }
                 return;

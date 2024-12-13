@@ -1,18 +1,5 @@
 package studio.magemonkey.homestead;
 
-import studio.magemonkey.codex.bungee.BungeeUtil;
-import studio.magemonkey.codex.config.legacy.LegacyConfigManager;
-import studio.magemonkey.codex.legacy.placeholder.PlaceholderRegistry;
-import studio.magemonkey.codex.legacy.placeholder.PlaceholderType;
-import studio.magemonkey.codex.util.messages.MessageUtil;
-import studio.magemonkey.homestead.commands.GeneralCommands;
-import studio.magemonkey.homestead.config.ConfigHandler;
-import studio.magemonkey.homestead.deeds.Deed;
-import studio.magemonkey.homestead.deeds.GlobalPlotsManager;
-import studio.magemonkey.homestead.deeds.Plot;
-import studio.magemonkey.homestead.deeds.PlotManager;
-import studio.magemonkey.homestead.util.bungee.BungeeListener;
-import studio.magemonkey.homestead.util.bungee.JoinListener;
 import com.sk89q.bukkit.util.CommandsManagerRegistration;
 import com.sk89q.minecraft.util.commands.*;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
@@ -24,6 +11,19 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import studio.magemonkey.codex.CodexEngine;
+import studio.magemonkey.codex.bungee.BungeeUtil;
+import studio.magemonkey.codex.config.legacy.LegacyConfigManager;
+import studio.magemonkey.codex.legacy.placeholder.PlaceholderRegistry;
+import studio.magemonkey.codex.legacy.placeholder.PlaceholderType;
+import studio.magemonkey.homestead.commands.GeneralCommands;
+import studio.magemonkey.homestead.config.ConfigHandler;
+import studio.magemonkey.homestead.deeds.Deed;
+import studio.magemonkey.homestead.deeds.GlobalPlotsManager;
+import studio.magemonkey.homestead.deeds.Plot;
+import studio.magemonkey.homestead.deeds.PlotManager;
+import studio.magemonkey.homestead.util.bungee.BungeeListener;
+import studio.magemonkey.homestead.util.bungee.JoinListener;
 
 import java.io.File;
 
@@ -106,7 +106,7 @@ public class Homestead extends JavaPlugin {
         FileConfiguration lang =
                 LegacyConfigManager.loadConfigFile(new File(getDataFolder() + File.separator + "lang", "lang_en.yml"),
                         getResource("lang/lang_en.yml"));
-        MessageUtil.load(lang, this);
+        CodexEngine.get().getMessageUtil().load(lang, this);
         super.onLoad();
     }
 

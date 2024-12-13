@@ -1,12 +1,5 @@
 package studio.magemonkey.homestead.deeds;
 
-import studio.magemonkey.codex.CodexEngine;
-import studio.magemonkey.codex.bungee.BungeeUtil;
-import studio.magemonkey.codex.legacy.utils.Utils;
-import studio.magemonkey.codex.util.messages.MessageData;
-import studio.magemonkey.codex.util.messages.MessageUtil;
-import studio.magemonkey.homestead.Homestead;
-import studio.magemonkey.homestead.config.ConfigHandler;
 import lombok.Getter;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -17,6 +10,12 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.scheduler.BukkitRunnable;
+import studio.magemonkey.codex.CodexEngine;
+import studio.magemonkey.codex.bungee.BungeeUtil;
+import studio.magemonkey.codex.legacy.utils.Utils;
+import studio.magemonkey.codex.util.messages.MessageData;
+import studio.magemonkey.homestead.Homestead;
+import studio.magemonkey.homestead.config.ConfigHandler;
 
 import java.util.*;
 
@@ -62,11 +61,13 @@ public class SignUpdater implements Listener {
             if (gracePeriod) {
                 final String own = plot.getOwner();
                 if (!sentRecently.contains(own)) {
-                    String message = MessageUtil.getMessageAsString("plots.gracePeriod", "plots.gracePeriod",
-                            new MessageData("plotname", plot.getName()),
-                            new MessageData("time",
-                                    Utils.getFriendlyTime(plot.getFinalExpiry() - System.currentTimeMillis())));
-                    if (CodexEngine.IS_BUNGEE) {
+                    String message = CodexEngine.get()
+                            .getMessageUtil()
+                            .getMessageAsString("plots.gracePeriod", "plots.gracePeriod",
+                                    new MessageData("plotname", plot.getName()),
+                                    new MessageData("time",
+                                            Utils.getFriendlyTime(plot.getFinalExpiry() - System.currentTimeMillis())));
+                    if (BungeeUtil.isBungee()) {
                         BungeeUtil.sendPlayerMessage(own, message);
                         sentRecently.add(own);
                     } else {

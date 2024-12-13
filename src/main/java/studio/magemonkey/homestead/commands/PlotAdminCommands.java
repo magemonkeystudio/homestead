@@ -1,12 +1,5 @@
 package studio.magemonkey.homestead.commands;
 
-import studio.magemonkey.codex.util.messages.MessageData;
-import studio.magemonkey.codex.util.messages.MessageUtil;
-import studio.magemonkey.homestead.Homestead;
-import studio.magemonkey.homestead.deeds.Deed;
-import studio.magemonkey.homestead.deeds.Plot;
-import studio.magemonkey.homestead.deeds.PlotManager;
-import studio.magemonkey.homestead.util.bungee.BungeeCommandException;
 import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.CommandPermissions;
@@ -22,6 +15,13 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.Sign;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import studio.magemonkey.codex.CodexEngine;
+import studio.magemonkey.codex.util.messages.MessageData;
+import studio.magemonkey.homestead.Homestead;
+import studio.magemonkey.homestead.deeds.Deed;
+import studio.magemonkey.homestead.deeds.Plot;
+import studio.magemonkey.homestead.deeds.PlotManager;
+import studio.magemonkey.homestead.util.bungee.BungeeCommandException;
 
 import java.util.concurrent.TimeUnit;
 
@@ -97,7 +97,7 @@ public class PlotAdminCommands {
         final Location    loc    = player.getLocation().clone();
         Plot              plot   = this.getPlot(mgr, id);
         plot.setHome(loc);
-        MessageUtil.sendMessage("plots.commands.plot.admin.setHome",
+        CodexEngine.get().getMessageUtil().sendMessage("plots.commands.plot.admin.setHome",
                 sender,
                 new MessageData("plot", plot),
                 new MessageData("location", loc));

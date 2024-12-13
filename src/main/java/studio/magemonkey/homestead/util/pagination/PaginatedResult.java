@@ -18,12 +18,10 @@
 
 package studio.magemonkey.homestead.util.pagination;
 
-import studio.magemonkey.homestead.bungee.util.CordUtil;
-import studio.magemonkey.homestead.util.bungee.BungeeCommandException;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.command.CommandSender;
+import studio.magemonkey.homestead.util.bungee.BungeeCommandException;
 
 import java.util.ArrayList;
 import java.util.Collection;

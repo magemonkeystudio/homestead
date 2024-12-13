@@ -1,15 +1,5 @@
 package studio.magemonkey.homestead.commands;
 
-import studio.magemonkey.codex.CodexEngine;
-import studio.magemonkey.codex.util.messages.MessageData;
-import studio.magemonkey.codex.util.messages.MessageUtil;
-import studio.magemonkey.homestead.Homestead;
-import studio.magemonkey.homestead.config.ConfigHandler;
-import studio.magemonkey.homestead.deeds.Plot;
-import studio.magemonkey.homestead.deeds.PlotManager;
-import studio.magemonkey.homestead.util.Util;
-import studio.magemonkey.homestead.util.bungee.BungeeCommandException;
-import studio.magemonkey.homestead.util.pagination.SimplePaginatedResult;
 import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.CommandPermissions;
@@ -24,6 +14,15 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import studio.magemonkey.codex.CodexEngine;
+import studio.magemonkey.codex.util.messages.MessageData;
+import studio.magemonkey.homestead.Homestead;
+import studio.magemonkey.homestead.config.ConfigHandler;
+import studio.magemonkey.homestead.deeds.Plot;
+import studio.magemonkey.homestead.deeds.PlotManager;
+import studio.magemonkey.homestead.util.Util;
+import studio.magemonkey.homestead.util.bungee.BungeeCommandException;
+import studio.magemonkey.homestead.util.pagination.SimplePaginatedResult;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -112,7 +111,9 @@ public class PlotCommands {
         final Player player = (Player) sender;
 
         Plot plot = this.getPlot(player);
-        MessageUtil.sendMessage("plots.commands.plot.players.list", sender, new MessageData("plot", plot));
+        CodexEngine.get()
+                .getMessageUtil()
+                .sendMessage("plots.commands.plot.players.list", sender, new MessageData("plot", plot));
     }
 
     @Command(aliases = {"home"}, desc = "Teleport the command sender's plot.", usage = "[player]", min = 0, max = 1)
@@ -134,7 +135,7 @@ public class PlotCommands {
 
         final Plot plot = this.getPlot(target);
         if (!(plot.hasPlayer(player) || plot.isOwner(player))) {
-            MessageUtil.sendMessage("plots.commands.plot.home.notMember",
+            CodexEngine.get().getMessageUtil().sendMessage("plots.commands.plot.home.notMember",
                     player,
                     new MessageData("plot", plot),
                     new MessageData("player", target));
@@ -142,7 +143,7 @@ public class PlotCommands {
         }
 
         if (getCooldown(player) > 0) {
-            MessageUtil.sendMessage("plots.commands.plot.home.cooldown", player,
+            CodexEngine.get().getMessageUtil().sendMessage("plots.commands.plot.home.cooldown", player,
                     new MessageData("plot", plot),
                     new MessageData("player", target),
                     new MessageData("time", getCooldown(player)));
@@ -180,7 +181,7 @@ public class PlotCommands {
         int warmupTime = Homestead.getInstance().getConfigHandler().getInt(ConfigHandler.HOME_WARMUP);
 
         if (warmupTime > 0 && !player.hasPermission("homestead.cmd.home.warmup.bypass")) {
-            MessageUtil.sendMessage("plots.commands.plot.home.warmup", player,
+            CodexEngine.get().getMessageUtil().sendMessage("plots.commands.plot.home.warmup", player,
                     new MessageData("player", player),
                     new MessageData("time", warmupTime));
 
@@ -196,12 +197,12 @@ public class PlotCommands {
 
                 //noinspection ObjectEquality
                 if (target == player) {
-                    MessageUtil.sendMessage("plots.commands.plot.home.own",
+                    CodexEngine.get().getMessageUtil().sendMessage("plots.commands.plot.home.own",
                             player,
                             new MessageData("player", player),
                             new MessageData("plot", plot));
                 } else {
-                    MessageUtil.sendMessage("plots.commands.plot.home.other",
+                    CodexEngine.get().getMessageUtil().sendMessage("plots.commands.plot.home.other",
                             player,
                             new MessageData("player", player),
                             new MessageData("target", target),
@@ -213,12 +214,12 @@ public class PlotCommands {
             player.teleport(plot.getHome());
             //noinspection ObjectEquality
             if (target == player) {
-                MessageUtil.sendMessage("plots.commands.plot.home.own",
+                CodexEngine.get().getMessageUtil().sendMessage("plots.commands.plot.home.own",
                         player,
                         new MessageData("player", player),
                         new MessageData("plot", plot));
             } else {
-                MessageUtil.sendMessage("plots.commands.plot.home.other",
+                CodexEngine.get().getMessageUtil().sendMessage("plots.commands.plot.home.other",
                         player,
                         new MessageData("player", player),
                         new MessageData("target", target),
@@ -231,7 +232,7 @@ public class PlotCommands {
         if (warmup.containsKey(player.getUniqueId())) { //Cancel any previous task before starting a new one
             Bukkit.getScheduler().cancelTask(warmup.get(player.getUniqueId()));
             warmup.remove(player.getUniqueId());
-            MessageUtil.sendMessage("plots.commands.plot.home.warmup-cancelled", player,
+            CodexEngine.get().getMessageUtil().sendMessage("plots.commands.plot.home.warmup-cancelled", player,
                     new MessageData("player", player));
         }
     }
@@ -291,7 +292,7 @@ public class PlotCommands {
 
         int sellDist = Homestead.getInstance().getConfigHandler().getInt(ConfigHandler.SELL_DISTANCE);
         if (player.getLocation().distance(buyer.getLocation()) > sellDist) {
-            MessageUtil.sendMessage("plots.commands.plot.sell.distance", player,
+            CodexEngine.get().getMessageUtil().sendMessage("plots.commands.plot.sell.distance", player,
                     new MessageData("sellDistance", sellDist),
                     new MessageData("buyer", buyer.getName()));
             return;

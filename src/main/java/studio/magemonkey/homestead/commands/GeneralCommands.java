@@ -1,10 +1,10 @@
 package studio.magemonkey.homestead.commands;
 
-import studio.magemonkey.homestead.Homestead;
 import com.sk89q.minecraft.util.commands.Command;
 import com.sk89q.minecraft.util.commands.CommandContext;
 import com.sk89q.minecraft.util.commands.NestedCommand;
 import org.bukkit.command.CommandSender;
+import studio.magemonkey.homestead.Homestead;
 
 public class GeneralCommands {
     @SuppressWarnings("UnusedParameters") // meh, WG command API

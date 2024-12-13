@@ -1,7 +1,7 @@
 package studio.magemonkey.homestead.util;
 
-import studio.magemonkey.codex.CodexEngine;
 import org.bukkit.ChatColor;
+import studio.magemonkey.codex.CodexEngine;
 
 public final class Util {
     /**

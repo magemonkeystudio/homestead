@@ -1,8 +1,8 @@
 package studio.magemonkey.homestead.bungee;
 
-import studio.magemonkey.homestead.bungee.util.CordUtil;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.config.Configuration;
+import studio.magemonkey.homestead.bungee.util.CordUtil;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;

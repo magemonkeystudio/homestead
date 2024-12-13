@@ -1,7 +1,5 @@
 package studio.magemonkey.homestead.commands;
 
-import studio.magemonkey.homestead.Homestead;
-import studio.magemonkey.homestead.deeds.Deed;
 import com.sk89q.minecraft.util.commands.*;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -10,6 +8,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import studio.magemonkey.homestead.Homestead;
+import studio.magemonkey.homestead.deeds.Deed;
 
 public class DeedCommands {
 

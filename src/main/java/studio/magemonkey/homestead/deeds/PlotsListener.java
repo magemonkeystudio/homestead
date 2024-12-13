@@ -255,22 +255,22 @@ public class PlotsListener implements Listener {
 //
 ////            final Map<MaterialData, Integer> limitedBlocks = plot.getDeed().getLimitedBlocks();
 //
-////            if (limitedBlocks.isEmpty()) {
-////                return;
-////            }
-////
-////            for (final Map.Entry<MaterialData, Integer> entry : limitedBlocks.entrySet()) {
-////                final MaterialData data = entry.getKey();
-////                final Integer amount = entry.getValue();
-////                if (this.countMaterial(region, world, data) > amount) {
-////                    event.setCancelled(true);
-////                    player.sendMessage(ChatColor.RED + "You can not place anymore " + ChatColor.GRAY + MaterialUtil.friendlyName(data.getItemType()) + "s" + ChatColor.RED + " in this plot.");
-////                    return;
-////                }
-////            }
+
+    ////            if (limitedBlocks.isEmpty()) {
+    ////                return;
+    ////            }
+    ////
+    ////            for (final Map.Entry<MaterialData, Integer> entry : limitedBlocks.entrySet()) {
+    ////                final MaterialData data = entry.getKey();
+    ////                final Integer amount = entry.getValue();
+    ////                if (this.countMaterial(region, world, data) > amount) {
+    ////                    event.setCancelled(true);
+    ////                    player.sendMessage(ChatColor.RED + "You can not place anymore " + ChatColor.GRAY + MaterialUtil.friendlyName(data.getItemType()) + "s" + ChatColor.RED + " in this plot.");
+    ////                    return;
+    ////                }
+    ////            }
 //        }
 //    }
-
     @EventHandler
     public void onPlayerQuit(final PlayerQuitEvent event) {
         this.removeConfirmingPlot(event.getPlayer());

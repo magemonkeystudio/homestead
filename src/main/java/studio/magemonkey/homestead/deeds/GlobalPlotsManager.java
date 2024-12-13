@@ -1,8 +1,5 @@
 package studio.magemonkey.homestead.deeds;
 
-import studio.magemonkey.homestead.Homestead;
-import studio.magemonkey.homestead.config.CustomYaml;
-import studio.magemonkey.homestead.util.ConfigUtil;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.Bukkit;
@@ -11,6 +8,9 @@ import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import studio.magemonkey.homestead.Homestead;
+import studio.magemonkey.homestead.config.CustomYaml;
+import studio.magemonkey.homestead.util.ConfigUtil;
 
 import java.util.*;
 

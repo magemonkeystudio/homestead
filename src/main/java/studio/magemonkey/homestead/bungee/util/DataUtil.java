@@ -1,7 +1,7 @@
 package studio.magemonkey.homestead.bungee.util;
 
-import studio.magemonkey.homestead.bungee.Bridge;
 import net.md_5.bungee.config.Configuration;
+import studio.magemonkey.homestead.bungee.Bridge;
 
 import java.util.List;
 

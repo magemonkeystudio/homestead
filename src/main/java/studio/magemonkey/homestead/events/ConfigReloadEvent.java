@@ -1,10 +1,10 @@
 package studio.magemonkey.homestead.events;
 
-import studio.magemonkey.homestead.config.ConfigHandler;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import studio.magemonkey.homestead.config.ConfigHandler;
 
 /**
  * This event is fired every time the configuration is reloaded.

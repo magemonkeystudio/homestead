@@ -1,11 +1,11 @@
 package studio.magemonkey.homestead.config;
 
-import studio.magemonkey.homestead.Homestead;
-import studio.magemonkey.homestead.events.ConfigReloadEvent;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
+import studio.magemonkey.homestead.Homestead;
+import studio.magemonkey.homestead.events.ConfigReloadEvent;
 
 import java.util.List;
 

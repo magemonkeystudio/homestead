@@ -1,10 +1,10 @@
 package studio.magemonkey.homestead.bungee.util;
 
-import studio.magemonkey.homestead.bungee.Bridge;
-import studio.magemonkey.homestead.bungee.MessageData;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import studio.magemonkey.homestead.bungee.Bridge;
+import studio.magemonkey.homestead.bungee.MessageData;
 
 public class CordUtil {
 
