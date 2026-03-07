@@ -27,6 +27,9 @@ import studio.magemonkey.homestead.util.bungee.JoinListener;
 
 import java.io.File;
 
+/**
+ * Main plugin class for Homestead.
+ */
 public class Homestead extends JavaPlugin {
     @Getter
     private static Homestead                      instance;
