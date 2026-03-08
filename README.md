@@ -1,5 +1,5 @@
-[![Build](https://github.com/promcteam/homestead/actions/workflows/release.yml/badge.svg?branch=main)](https://repo.travja.dev/releases/studio/magemonkey/homestead/1.0.2-R0.3-SNAPSHOT)
-[![Build](https://github.com/promcteam/homestead/actions/workflows/devbuild.yml/badge.svg?branch=dev)](https://repo.travja.dev/snapshots/studio/magemonkey/homestead/1.0.2-R0.3-SNAPSHOT)
+[![Build](https://github.com/magemonkeystudio/homestead/actions/workflows/release.yml/badge.svg?branch=main)](https://repo.travja.dev/releases/studio/magemonkey/homestead/1.0.2-R0.4-SNAPSHOT)
+[![Build](https://github.com/magemonkeystudio/homestead/actions/workflows/devbuild.yml/badge.svg?branch=dev)](https://repo.travja.dev/snapshots/studio/magemonkey/homestead/1.0.2-R0.4-SNAPSHOT)
 [![Discord](https://dcbadge.limes.pink/api/server/mQrkW4htUA?style=flat)](https://discord.gg/mQrkW4htUA)
 
 # Homestead
@@ -16,12 +16,12 @@ If you wish to use Homestead as a dependency in your projects, Homestead is avai
 <dependency>
     <groupId>studio.magemonkey</groupId>
     <artifactId>homestead</artifactId>
-    <version>1.0.2-R0.3-SNAPSHOT</version>
+    <version>1.0.2-R0.4-SNAPSHOT</version>
 </dependency>
 ```
 
 ### A huge thanks to our contributors
 
-<a href="https://github.com/promcteam/homestead/graphs/contributors">
-<img src="https://contrib.rocks/image?repo=promcteam/homestead" />
+<a href="https://github.com/magemonkeystudio/homestead/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=magemonkeystudio/homestead" />
 </a>
